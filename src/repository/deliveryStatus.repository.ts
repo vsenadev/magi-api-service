@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import {
-  CreateDeliveryStatusDto, DeleteDeliveryStatusDto,
-  UpdateDeliveryStatusDto
-} from "../dto/deliveryStatus.dto";
+  CreateDeliveryStatusDto,
+  DeleteDeliveryStatusDto,
+  UpdateDeliveryStatusDto,
+} from '../dto/deliveryStatus.dto';
 import { DatabaseService } from '../database/database.service';
 import { IReturnMessage } from '../model/returnMessage.model';
 import { IDeliveryStatus } from '../model/deliveryStatus.model';

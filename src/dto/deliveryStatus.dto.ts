@@ -1,9 +1,9 @@
 import {
   CreateDeliveryStatusSchema,
   DeleteDeliveryStatusSchema,
-  UpdateDeliveryStatusSchema
-} from "../schema/deliveryStatus.schema";
-import { IDeliveryStatus } from "../model/deliveryStatus.model";
+  UpdateDeliveryStatusSchema,
+} from '../schema/deliveryStatus.schema';
+import { IDeliveryStatus } from '../model/deliveryStatus.model';
 
 export class CreateDeliveryStatusDto {
   name: string;

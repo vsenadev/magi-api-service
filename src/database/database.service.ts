@@ -1,6 +1,5 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { Client } from 'pg';
-import { IDeliveryStatus } from '../model/deliveryStatus.model';
 import { IDatabaseReturnModel } from '../model/databaseReturn.model';
 
 @Injectable()
