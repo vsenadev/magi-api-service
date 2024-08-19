@@ -4,7 +4,6 @@ import {
   UpdateAddressSchema,
   DeleteAddressSchema,
 } from '../schema/address.schema';
-import { DeleteTypeAccountSchema } from '../schema/typeAccount.schema';
 
 export class CreateAddressDto {
   cep: string;
@@ -34,7 +33,7 @@ export class UpdateAddressDto {
   number?: string;
 
   constructor(props: IAddress) {
-    const parsed = CreateAddressSchema.parse(props);
+    const parsed = UpdateAddressSchema.parse(props);
     this.cep = parsed.cep;
     this.street = parsed.street;
     this.complement = parsed.complement;
@@ -48,6 +47,6 @@ export class DeleteAddressDto {
   id: number;
 
   constructor(props: number) {
-    this.id = DeleteTypeAccountSchema.id.parse(props);
+    this.id = DeleteAddressSchema.id.parse(props);
   }
 }

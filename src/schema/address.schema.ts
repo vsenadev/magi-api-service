@@ -25,6 +25,6 @@ export const UpdateAddressSchema = z.object({
   number: z.string().min(1).max(255).optional(),
 });
 
-export const DeleteAddressSchema = z.object({
+export const DeleteAddressSchema = {
   id: z.number().positive('ID inválido'),
-});
+};
