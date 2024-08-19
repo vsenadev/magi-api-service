@@ -3,9 +3,15 @@ import { DatabaseService } from './database/database.service';
 import { DeliveryStatusModule } from './modules/deliveryStatus.module';
 import { LockStatusModule } from './modules/lockStatus.module';
 import { StatusAccountModule } from './modules/statusAccount.module';
+import { TypeAccountModule } from './modules/typeAccount.module';
 
 @Module({
-  imports: [DeliveryStatusModule, LockStatusModule, StatusAccountModule],
+  imports: [
+    DeliveryStatusModule,
+    LockStatusModule,
+    StatusAccountModule,
+    TypeAccountModule,
+  ],
   controllers: [],
   providers: [DatabaseService],
 })

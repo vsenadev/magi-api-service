@@ -1,4 +1,4 @@
-export interface IStatusAccount {
+export interface ITypeAccount {
   id?: number;
   name?: string;
   description?: string;
