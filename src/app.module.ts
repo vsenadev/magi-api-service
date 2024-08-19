@@ -4,6 +4,7 @@ import { DeliveryStatusModule } from './modules/deliveryStatus.module';
 import { LockStatusModule } from './modules/lockStatus.module';
 import { StatusAccountModule } from './modules/statusAccount.module';
 import { TypeAccountModule } from './modules/typeAccount.module';
+import { AddressModule } from './modules/address.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { TypeAccountModule } from './modules/typeAccount.module';
     LockStatusModule,
     StatusAccountModule,
     TypeAccountModule,
+    AddressModule,
   ],
   controllers: [],
   providers: [DatabaseService],
