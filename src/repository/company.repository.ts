@@ -43,7 +43,7 @@ export class CompanyRepository {
 
   async findOne(id: number): Promise<ICompany | object> {
     const query =
-      "SELECT c.name AS company_name, c.picture AS company_picture, c.cnpj, c.area, c.email, a.street, a.complement, a.number, a.city, a.state, t.name AS type_account, s.name AS status_account, array_agg(json_build_object('employee_name', e.name, 'employee_picture', e.picture)) AS employees FROM public.company AS c LEFT JOIN public.address AS a ON a.id = c.address_id LEFT JOIN public.type_account AS t ON t.id = c.type_id LEFT JOIN public.status_account AS s ON s.id = c.status_id LEFT JOIN public.employee AS e ON c.id = e.company_id WHERE c.id = ($1) GROUP BY c.name, c.picture, c.cnpj, c.area, c.email, a.street, a.complement, a.number, a.city, a.state, t.name, s.name;";
+      "SELECT c.name AS company_name, c.picture AS company_picture, c.cnpj, c.area, c.email, a.street, a.complement, a.number, a.city, a.state, t.name AS type_account, s.name AS status_account, array_agg(json_build_object('employee_id', e.id,'employee_name', e.name, 'employee_picture', e.picture)) AS employees FROM public.company AS c LEFT JOIN public.address AS a ON a.id = c.address_id LEFT JOIN public.type_account AS t ON t.id = c.type_id LEFT JOIN public.status_account AS s ON s.id = c.status_id LEFT JOIN public.employee AS e ON c.id = e.company_id WHERE c.id = ($1) GROUP BY c.name, c.picture, c.cnpj, c.area, c.email, a.street, a.complement, a.number, a.city, a.state, t.name, s.name;";
     const param = [id];
     const result: IDatabaseReturnModel = await this.db.query(query, param);
 
@@ -62,8 +62,7 @@ export class CompanyRepository {
   }
 
   async deleteOne(id: DeleteCompanyDto): Promise<IReturnMessage> {
-    const query =
-      'UPDATE public.type_account SET status_id = 4 WHERE id = ($1)';
+    const query = 'UPDATE public.company SET status_id = 4 WHERE id = ($1)';
     const param = [id];
     await this.db.query(query, param);
 

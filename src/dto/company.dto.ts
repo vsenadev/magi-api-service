@@ -9,7 +9,7 @@ export class CreateCompanyDto {
   name: string;
   picture: string;
   cnpj: string;
-  password: string;
+  password?: string;
   area: string;
   email: string;
   address_id: number;
@@ -46,7 +46,6 @@ export class UpdateCompanyDto {
     this.name = parsed.name;
     this.picture = parsed.picture;
     this.cnpj = parsed.cnpj;
-    this.password = parsed.password;
     this.area = parsed.area;
     this.email = parsed.email;
     this.address_id = parsed.address_id;
