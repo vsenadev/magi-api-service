@@ -7,11 +7,14 @@ import {
   CreateCompanyDto,
   DeleteCompanyDto,
   UpdateCompanyDto,
+  ValidateCodeDto,
 } from '../dto/company.dto';
 import { ICompany } from '../model/company.model';
 import { RandomCode } from '../utils/randomCode.utils';
 import { Cryptography } from '../utils/cryptograph.utils';
 import { Email } from '../utils/Email.utils';
+import { Express } from 'express';
+import axios from 'axios';
 
 @Injectable()
 export class CompanyService {
@@ -26,6 +29,8 @@ export class CompanyService {
     try {
       const codeGenerated = this.codeGenerator.generateRandomPassword();
       data['password'] = await this.cryptography.hashPassword(codeGenerated);
+      console.log(codeGenerated);
+      console.log(data['password']);
       const newCompany = new CreateCompanyDto(data);
       await this.companyRepository.create(newCompany);
       await this.email.sendEmailWithCode(
@@ -84,6 +89,56 @@ export class CompanyService {
     try {
       const deleteCompany = new DeleteCompanyDto(id);
       return await this.companyRepository.deleteOne(deleteCompany);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        throw new ValidationException(error);
+      } else if (error instanceof ValidationException) {
+        return { message: error.message };
+      }
+
+      throw error;
+    }
+  }
+
+  async validateCode(
+    id: number,
+    data: ValidateCodeDto,
+  ): Promise<boolean | IReturnMessage> {
+    try {
+      const password: object = await this.companyRepository.getCode(id);
+      return await this.cryptography.comparePassword(
+        data.code.toString(),
+        password['password'],
+      );
+    } catch (error) {
+      if (error instanceof ZodError) {
+        throw new ValidationException(error);
+      } else if (error instanceof ValidationException) {
+        return { message: error.message };
+      }
+
+      throw error;
+    }
+  }
+
+  async uploadImage(id: number, file: Express.Multer.File) {
+    try {
+      const formData = new FormData();
+      const imageBase64 = file.buffer.toString('base64');
+
+      formData.append('key', process.env.IMAGE_BB_KEY);
+      formData.append('image', imageBase64);
+
+      const imageUrl = await axios.post(
+        'https://api.imgbb.com/1/upload',
+        formData,
+      );
+
+      await this.companyRepository.updateOne(id, {
+        picture: imageUrl.data['data']['image']['url'],
+      });
+
+      return { message: 'Imagem alterada com sucesso' };
     } catch (error) {
       if (error instanceof ZodError) {
         throw new ValidationException(error);

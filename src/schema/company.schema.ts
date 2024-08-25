@@ -26,3 +26,7 @@ export const UpdateCompanySchema = z.object({
 export const DeleteCompanySchema = {
   id: z.number().positive('ID inválido'),
 };
+
+export const ValidateCodeSchema = z.object({
+  code: z.number().positive().min(6).max(6),
+});

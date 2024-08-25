@@ -10,3 +10,7 @@ export interface ICompany {
   type_id?: number;
   status_id?: number;
 }
+
+export interface ICompanyCode {
+  code: number;
+}

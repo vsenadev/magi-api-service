@@ -1,3 +1,3 @@
 export interface IReturnMessage {
-  message: string;
+  message: string | boolean;
 }

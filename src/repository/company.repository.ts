@@ -43,7 +43,7 @@ export class CompanyRepository {
 
   async findOne(id: number): Promise<ICompany | object> {
     const query =
-      "SELECT c.name AS company_name, c.picture AS company_picture, c.cnpj, c.area, c.email, a.street, a.complement, a.number, a.city, a.state, t.name AS type_account, s.name AS status_account, array_agg(json_build_object('employee_id', e.id,'employee_name', e.name, 'employee_picture', e.picture)) AS employees FROM public.company AS c LEFT JOIN public.address AS a ON a.id = c.address_id LEFT JOIN public.type_account AS t ON t.id = c.type_id LEFT JOIN public.status_account AS s ON s.id = c.status_id LEFT JOIN public.employee AS e ON c.id = e.company_id WHERE c.id = ($1) GROUP BY c.name, c.picture, c.cnpj, c.area, c.email, a.street, a.complement, a.number, a.city, a.state, t.name, s.name;";
+      "SELECT c.id, c.name AS company_name, c.picture AS company_picture, c.cnpj, c.area, c.email, a.street, a.complement, a.number, a.city, a.state, t.name AS type_account, s.name AS status_account, array_agg(json_build_object('employee_id', e.id,'employee_name', e.name, 'employee_picture', e.picture)) AS employees FROM public.company AS c LEFT JOIN public.address AS a ON a.id = c.address_id LEFT JOIN public.type_account AS t ON t.id = c.type_id LEFT JOIN public.status_account AS s ON s.id = c.status_id LEFT JOIN public.employee AS e ON c.id = e.company_id WHERE c.id = ($1) GROUP BY c.id, c.name, c.picture, c.cnpj, c.area, c.email, a.street, a.complement, a.number, a.city, a.state, t.name, s.name;";
     const param = [id];
     const result: IDatabaseReturnModel = await this.db.query(query, param);
 
@@ -67,5 +67,13 @@ export class CompanyRepository {
     await this.db.query(query, param);
 
     return { message: 'Empresa excluida com sucesso' };
+  }
+
+  async getCode(id: number): Promise<IReturnMessage | object> {
+    const query = `SELECT password FROM public.company WHERE id = ($1)`;
+    const param = [id];
+    const result: IDatabaseReturnModel = await this.db.query(query, param);
+
+    return result.rows[0];
   }
 }

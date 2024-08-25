@@ -1,9 +1,9 @@
 import {
   CreateCompanySchema,
   DeleteCompanySchema,
-  UpdateCompanySchema,
-} from '../schema/company.schema';
-import { ICompany } from '../model/company.model';
+  UpdateCompanySchema, ValidateCodeSchema
+} from "../schema/company.schema";
+import { ICompany, ICompanyCode } from "../model/company.model";
 
 export class CreateCompanyDto {
   name: string;
@@ -59,5 +59,14 @@ export class DeleteCompanyDto {
 
   constructor(props: number) {
     this.id = DeleteCompanySchema.id.parse(props);
+  }
+}
+
+export class ValidateCodeDto {
+  code: number;
+
+  constructor(props: ICompanyCode) {
+    const parsed = ValidateCodeSchema.parse(props);
+    this.code = parsed.code;
   }
 }
