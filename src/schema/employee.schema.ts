@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const CreateEmployeeSchema = z.object({
   name: z.string().min(1).max(255),
   company_id: z.number().positive(),
-  cpf: z.string().min(11).max(11),
+  cpf: z.string().min(11).max(14),
   picture: z.string().optional(),
   password: z.string().min(1).optional(),
   phoneNumber: z.string().min(11).max(11),
@@ -15,7 +15,7 @@ export const CreateEmployeeSchema = z.object({
 export const UpdateEmployeeSchema = z.object({
   name: z.string().min(1).max(255).optional(),
   company_id: z.number().positive().optional(),
-  cpf: z.string().min(11).max(11).optional(),
+  cpf: z.string().min(11).max(14).optional(),
   picture: z.string().optional(),
   password: z.string().min(1).optional(),
   phoneNumber: z.string().min(11).max(11).optional(),

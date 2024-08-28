@@ -51,7 +51,7 @@ export class EmployeeService {
 
   async findAllEmployees(): Promise<IEmployee[] | object[]> {
     try {
-      return await this.employeeRepository.findAll();
+      return await this.employeeRepository.findAllEmployees();
     } catch (error) {
       throw error;
     }
@@ -59,7 +59,7 @@ export class EmployeeService {
 
   async findOneEmployee(id: number): Promise<IEmployee | object> {
     try {
-      return await this.employeeRepository.findOne(id);
+      return await this.employeeRepository.findOneEmployee(id);
     } catch (error) {
       throw error;
     }
@@ -71,7 +71,7 @@ export class EmployeeService {
   ): Promise<IReturnMessage> {
     try {
       const updateEmployee = new UpdateEmployeeDto(data);
-      return await this.employeeRepository.updateOne(id, updateEmployee);
+      return await this.employeeRepository.updateOneEmployee(id, updateEmployee);
     } catch (error) {
       if (error instanceof ZodError) {
         throw new ValidationException(error);
@@ -86,7 +86,7 @@ export class EmployeeService {
   async deleteOneEmployee(id: number): Promise<IReturnMessage> {
     try {
       const deleteEmployee = new DeleteEmployeeDto(id);
-      return await this.employeeRepository.deleteOne(deleteEmployee);
+      return await this.employeeRepository.deleteOneEmployee(deleteEmployee);
     } catch (error) {
       if (error instanceof ZodError) {
         throw new ValidationException(error);
@@ -103,7 +103,7 @@ export class EmployeeService {
     data: ValidateCodeDto,
   ): Promise<boolean | IReturnMessage> {
     try {
-      const password: object = await this.EmployeeRepository.getCode(id);
+      const password: object = await this.employeeRepository.getCode(id);
       return await this.cryptography.comparePassword(
         data.code.toString(),
         password['password'],
@@ -132,7 +132,7 @@ export class EmployeeService {
         formData,
       );
 
-      await this.employeeRepository.updateOne(id, {
+      await this.employeeRepository.updateOneEmployee(id, {
         picture: imageUrl.data['data']['image']['url'],
       });
 
