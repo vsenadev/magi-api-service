@@ -3,20 +3,20 @@ import { DatabaseService } from '../database/database.service';
 import { RandomCode } from '../utils/randomCode.utils';
 import { Cryptography } from '../utils/cryptograph.utils';
 import { Email } from '../utils/Email.utils';
-import { ProductController } from 'src/controller/product.controller';
-import { ProductService } from 'src/service/product.service';
-import { ProductRepository } from 'src/repository/Product.repository';
+import { DeliveryController } from 'src/controller/Delivery.controller';
+import { DeliveryService } from 'src/service/delivery.service';
+import { DeliveryRepository } from 'src/repository/Delivery.repository';
 
 @Module({
   imports: [],
-  controllers: [ProductController],
+  controllers: [DeliveryController],
   providers: [
-    ProductService,
-    ProductRepository,
+    DeliveryService,
+    DeliveryRepository,
     DatabaseService,
     RandomCode,
     Cryptography,
     Email,
   ],
 })
-export class ProductModule {}
+export class DeliveryModule {}

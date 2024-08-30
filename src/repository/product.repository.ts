@@ -16,7 +16,7 @@ export class ProductRepository {
       data.name.toUpperCase(),
       data.type,
       data.value,
-      data.lenght,
+      data.length,
       data.width, 
       data.height,
       data.company_id
@@ -29,16 +29,16 @@ export class ProductRepository {
 
   async findAllProducts(): Promise<IProduct[] | object[]> {
     const query =
-      'SELECT p.id, p.name AS Product_name, p.lenght, p.width, p.height AS Product_informations FROM public.Product AS p JOIN public.company AS c ON c.id = e.company_id LEFT JOIN public.type_account AS t ON t.id = e.type_id LEFT JOIN public.status_account AS s ON s.id = e.status_id WHERE c.id = e.company_id;';
-    const result: IDatabaseReturnModel = await this.db.query(query);
+      'SELECT p.id, p.name, p.lenght, p.width, p.height AS Product_informations FROM public.Product AS p JOIN public.company AS c ON c.id = p.company_id WHERE c.id = p.company_id;';    
+      const result: IDatabaseReturnModel = await this.db.query(query);
 
     return result.rows;
   }
 
   async findOneProduct(id: number): Promise<IProduct | object> {
     const query =
-      "SELECT e.id, e.name AS Product_name, e.picture, c.name AS company_name, e.cpf, e.email, t.name AS type_account, s.name AS status_account FROM public.Product AS e JOIN public.company AS c ON c.id = e.company_id LEFT JOIN public.type_account AS t ON t.id = e.type_id LEFT JOIN public.status_account AS s ON s.id = e.status_id WHERE c.id = ($1);"
-    const param = [id];
+      "SELECT p.id, p.name, p.lenght, p.width, p.height AS Product_informations FROM public.Product AS p JOIN public.company AS c ON c.id = p.company_id WHERE c.id = ($1);"
+      const param = [id];
     const result: IDatabaseReturnModel = await this.db.query(query, param);
 
     return result.rows[0];
@@ -49,23 +49,23 @@ export class ProductRepository {
       id,
       data,
     );
-    const query = `UPDATE public.company SET ${setQuery} WHERE id = ($1)`;
+    const query = `UPDATE public.product SET ${setQuery} WHERE id = ($1)`;
     await this.db.query(query, queryParams);
 
-    return { message: 'Funcionário atualizado com sucesso' };
+    return { message: 'Produto atualizado com sucesso' };
   }
 
   async deleteOneProduct(dto: DeleteProductDto): Promise<IReturnMessage> {
-    const query = 'DELETE FROM public.Product AS e WHERE e.id = ($1)';
+    const query = 'DELETE FROM public.Product AS p WHERE p.id = ($1)';
     const param = [dto.id];  // Extract the ID from the DTO
     await this.db.query(query, param);
 
-    return { message: 'Funcionário excluído com sucesso' };
+    return { message: 'Produto excluído com sucesso' };
 }
 
 
   async getCode(id: number): Promise<IReturnMessage | object> {
-    const query = `DELETE FROM public.Product WHERE e.id = ($1)`;
+    const query = `DELETE FROM public.Product WHERE p.id = ($1)`;
     const param = [id];
     const result: IDatabaseReturnModel = await this.db.query(query, param);
 

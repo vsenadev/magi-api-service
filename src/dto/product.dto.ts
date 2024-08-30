@@ -1,12 +1,14 @@
+import { IProduct, IProductCode } from "src/model/product.model";
 import {
     ValidateCodeSchema
 } from "../schema/employee.schema";
+import { CreateProductSchema, DeleteProductSchema, UpdateProductSchema } from "src/schema/product.schema";
 
 export class CreateProductDto {
     name: string;
-    type: number;
-    value: string;
-    lenght: number;
+    type: string;
+    value: number;
+    length: number;
     width: number;
     height: number;
     company_id: number;
@@ -16,7 +18,7 @@ export class CreateProductDto {
         this.name = parsed.name;
         this.type = parsed.type;
         this.value = parsed.value;
-        this.lenght = parsed.lenght;
+        this.length = parsed.length;
         this.width = parsed.width;
         this.height = parsed.height;
         this.company_id = parsed.company_id;
@@ -25,8 +27,8 @@ export class CreateProductDto {
 
 export class UpdateProductDto {
     name?: string;
-    type?: number;
-    value?: string;
+    type?: string;
+    value?: number;
     lenght?: number;
     width?: number;
     height?: number;
@@ -37,7 +39,7 @@ export class UpdateProductDto {
         this.name = parsed.name;
         this.type = parsed.type;
         this.value = parsed.value;
-        this.lenght = parsed.lenght;
+        this.lenght = parsed.length;
         this.width = parsed.width;
         this.height = parsed.height;
         this.company_id = parsed.company_id;

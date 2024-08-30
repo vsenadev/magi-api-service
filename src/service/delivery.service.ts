@@ -4,25 +4,24 @@ import { ValidationException } from '../exceptions/validation.exception';
 import { IReturnMessage } from '../model/returnMessage.model';
 import {
   ValidateCodeDto,
-} from '../dto/Product.dto';
+} from '../dto/Delivery.dto';
 import { Cryptography } from '../utils/cryptograph.utils';
-import { Express } from 'express';
 import axios from 'axios';
-import { ProductRepository } from 'src/repository/Product.repository';
-import { CreateProductDto, DeleteProductDto, UpdateProductDto } from 'src/dto/Product.dto';
-import { IProduct } from 'src/model/Product.model';
+import { DeliveryRepository } from 'src/repository/Delivery.repository';
+import { CreateDeliveryDto, DeleteDeliveryDto, UpdateDeliveryDto } from 'src/dto/Delivery.dto';
+import { IDelivery } from 'src/model/Delivery.model';
 
 @Injectable()
-export class ProductService {
+export class DeliveryService {
   constructor(
-    private readonly productRepository: ProductRepository,
+    private readonly DeliveryRepository: DeliveryRepository,
     private readonly cryptography: Cryptography,
-  ) {}
+  ) { }
 
-  async createProduct(data: CreateProductDto): Promise<IReturnMessage> {
+  async createDelivery(data: CreateDeliveryDto): Promise<IReturnMessage> {
     try {
-      const newProduct = new CreateProductDto(data);
-      await this.productRepository.create(newProduct);
+      const newDelivery = new CreateDeliveryDto(data);
+      await this.DeliveryRepository.create(newDelivery);
       return { message: 'Produto criado com sucesso' };
     } catch (error) {
       if (error instanceof ZodError) {
@@ -35,29 +34,29 @@ export class ProductService {
     }
   }
 
-  async findAllProducts(): Promise<IProduct[] | object[]> {
+  async findAllDeliverys(): Promise<IDelivery[] | object[]> {
     try {
-      return await this.productRepository.findAllProducts();
+      return await this.DeliveryRepository.findAllDeliverys();
     } catch (error) {
       throw error;
     }
   }
 
-  async findOneProduct(id: number): Promise<IProduct | object> {
+  async findOneDelivery(id: number): Promise<IDelivery | object> {
     try {
-      return await this.productRepository.findOneProduct(id);
+      return await this.DeliveryRepository.findOneDelivery(id);
     } catch (error) {
       throw error;
     }
   }
 
-  async updateOneProduct(
+  async updateOneDelivery(
     id: number,
-    data: UpdateProductDto,
+    data: UpdateDeliveryDto,
   ): Promise<IReturnMessage> {
     try {
-      const updateProduct = new UpdateProductDto(data);
-      return await this.productRepository.updateOneProduct(id, updateProduct);
+      const updateDelivery = new UpdateDeliveryDto(data);
+      return await this.DeliveryRepository.updateOneDelivery(id, updateDelivery);
     } catch (error) {
       if (error instanceof ZodError) {
         throw new ValidationException(error);
@@ -69,10 +68,10 @@ export class ProductService {
     }
   }
 
-  async deleteOneProduct(id: number): Promise<IReturnMessage> {
+  async deleteOneDelivery(id: number): Promise<IReturnMessage> {
     try {
-      const deleteProduct = new DeleteProductDto(id);
-      return await this.productRepository.deleteOneProduct(deleteProduct);
+      const deleteDelivery = new DeleteDeliveryDto(id);
+      return await this.DeliveryRepository.deleteOneDelivery(deleteDelivery);
     } catch (error) {
       if (error instanceof ZodError) {
         throw new ValidationException(error);
@@ -89,7 +88,7 @@ export class ProductService {
     data: ValidateCodeDto,
   ): Promise<boolean | IReturnMessage> {
     try {
-      const password: object = await this.productRepository.getCode(id);
+      const password: object = await this.DeliveryRepository.getCode(id);
       return await this.cryptography.comparePassword(
         data.code.toString(),
         password['password'],

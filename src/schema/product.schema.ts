@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const CreateProductSchema = z.object({
   name: z.string().min(1).max(255),
   type: z.string().min(1),
-  value: z.number().min(1).max(14).optional(),
+  value: z.number().min(1).max(100000).optional(),
   length: z.number().min(1).max(14),
   width: z.number().min(1),
   height: z.number().min(1),

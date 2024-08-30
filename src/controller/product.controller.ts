@@ -11,10 +11,11 @@ import {
     UploadedFile,
 } from '@nestjs/common';
 import { IReturnMessage } from '../model/returnMessage.model';
-import { ValidateCodeDto } from '../dto/employee.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import { IProduct } from 'src/model/product.model';
+import { ProductService } from 'src/service/product.service';
+import { CreateProductDto, UpdateProductDto, ValidateCodeDto } from 'src/dto/Product.dto';
 
 
 @Controller('api/v1/product')
