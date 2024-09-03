@@ -22,7 +22,7 @@ export class DeliveryService {
     try {
       const newDelivery = new CreateDeliveryDto(data);
       await this.DeliveryRepository.create(newDelivery);
-      return { message: 'Produto criado com sucesso' };
+      return { message: 'Entrega criada com sucesso' };
     } catch (error) {
       if (error instanceof ZodError) {
         throw new ValidationException(error);

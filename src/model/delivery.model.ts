@@ -7,9 +7,9 @@ export interface IDelivery {
     status_id?: number;
     lock_status?: number;
     route_id?: string;
-    starting_adress?: number;
+    startingAddress?: number;
     destination?: number;
-    products?: number[];
+    products?: number;
   }
   
   export interface IDeliveryCode {

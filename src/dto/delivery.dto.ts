@@ -13,9 +13,9 @@ export class CreateDeliveryDto {
     status_id?: number;
     lock_status?: number;
     route_id?: string;
-    starting_adress?: number;
+    startingAddress?: number;
     destination?: number;
-    products?: number[];
+    products?: number;
 
     constructor(props: IDelivery) {
         const parsed = CreateDeliverySchema.parse(props);
@@ -27,7 +27,7 @@ export class CreateDeliveryDto {
         this.status_id = parsed.status_id;
         this.lock_status = parsed.lock_status;
         this.route_id = parsed.route_id;
-        this.starting_adress = parsed.starting_adress;
+        this.startingAddress = parsed.startingAddress;
         this.destination = parsed.destination;
         this.products = parsed.products;
     }
@@ -42,9 +42,9 @@ export class UpdateDeliveryDto {
     status_id?: number;
     lock_status?: number;
     route_id?: string;
-    starting_adress?: number;
+    startingAddress?: number;
     destination?: number;
-    products?: number[];
+    products?: number;
 
     constructor(props: IDelivery) {
         const parsed = UpdateDeliverySchema.parse(props);
@@ -56,7 +56,7 @@ export class UpdateDeliveryDto {
         this.status_id = parsed.status_id;
         this.lock_status = parsed.lock_status;
         this.route_id = parsed.route_id;
-        this.starting_adress = parsed.starting_adress;
+        this.startingAddress = parsed.startingAddress;
         this.destination = parsed.destination;
         this.products = parsed.products;
     }
