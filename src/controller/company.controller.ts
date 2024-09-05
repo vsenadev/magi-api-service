@@ -21,7 +21,6 @@ import { ICompany } from '../model/company.model';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 
-
 @Controller('api/v1/company')
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}

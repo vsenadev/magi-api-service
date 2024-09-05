@@ -2,13 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { ZodError } from 'zod';
 import { ValidationException } from '../exceptions/validation.exception';
 import { IReturnMessage } from '../model/returnMessage.model';
-import {
-  ValidateCodeDto,
-} from '../dto/Delivery.dto';
+import { ValidateCodeDto } from '../dto/Delivery.dto';
 import { Cryptography } from '../utils/cryptograph.utils';
 import axios from 'axios';
 import { DeliveryRepository } from 'src/repository/Delivery.repository';
-import { CreateDeliveryDto, DeleteDeliveryDto, UpdateDeliveryDto } from 'src/dto/Delivery.dto';
+import {
+  CreateDeliveryDto,
+  DeleteDeliveryDto,
+  UpdateDeliveryDto,
+} from 'src/dto/Delivery.dto';
 import { IDelivery } from 'src/model/Delivery.model';
 
 @Injectable()
@@ -16,7 +18,7 @@ export class DeliveryService {
   constructor(
     private readonly DeliveryRepository: DeliveryRepository,
     private readonly cryptography: Cryptography,
-  ) { }
+  ) {}
 
   async createDelivery(data: CreateDeliveryDto): Promise<IReturnMessage> {
     try {
@@ -56,7 +58,10 @@ export class DeliveryService {
   ): Promise<IReturnMessage> {
     try {
       const updateDelivery = new UpdateDeliveryDto(data);
-      return await this.DeliveryRepository.updateOneDelivery(id, updateDelivery);
+      return await this.DeliveryRepository.updateOneDelivery(
+        id,
+        updateDelivery,
+      );
     } catch (error) {
       if (error instanceof ZodError) {
         throw new ValidationException(error);

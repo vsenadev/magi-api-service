@@ -20,7 +20,7 @@ import { DeliveryModule } from './modules/delivery.module';
     CompanyModule,
     EmployeeModule,
     ProductModule,
-    DeliveryModule
+    DeliveryModule,
   ],
   controllers: [],
   providers: [DatabaseService],
