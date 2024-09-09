@@ -9,6 +9,7 @@ import { CompanyModule } from './modules/company.module';
 import { EmployeeModule } from './modules/employee.module';
 import { ProductModule } from './modules/product.module';
 import { DeliveryModule } from './modules/delivery.module';
+import { AuthModule } from './modules/auth.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { DeliveryModule } from './modules/delivery.module';
     EmployeeModule,
     ProductModule,
     DeliveryModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [DatabaseService],

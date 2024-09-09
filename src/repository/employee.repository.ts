@@ -65,8 +65,8 @@ export class EmployeeRepository {
   }
 
   async deleteOneEmployee(dto: DeleteEmployeeDto): Promise<IReturnMessage> {
-    const query = 'DELETE FROM public.employee AS e WHERE e.id = ($1)';
-    const param = [dto.id]; // Extract the ID from the DTO
+    const query = 'UPDATE public.employee SET status_id = 4 WHERE id = ($1)';
+    const param = [dto.id];
     await this.db.query(query, param);
 
     return { message: 'Funcionário excluído com sucesso' };
@@ -75,6 +75,14 @@ export class EmployeeRepository {
   async getCode(id: number): Promise<IReturnMessage | object> {
     const query = `DELETE FROM public.employee WHERE e.id = ($1)`;
     const param = [id];
+    const result: IDatabaseReturnModel = await this.db.query(query, param);
+
+    return result.rows[0];
+  }
+
+  async validateUser(email: string): Promise<object> {
+    const query = `SELECT email, password, type_id, status_id FROM public.employee WHERE email = ($1)`;
+    const param = [email];
     const result: IDatabaseReturnModel = await this.db.query(query, param);
 
     return result.rows[0];

@@ -76,4 +76,12 @@ export class CompanyRepository {
 
     return result.rows[0];
   }
+
+  async validateUser(email: string): Promise<object> {
+    const query = `SELECT email, password, type_id, status_id FROM public.company WHERE email = ($1)`;
+    const param = [email];
+    const result: IDatabaseReturnModel = await this.db.query(query, param);
+
+    return result.rows[0];
+  }
 }

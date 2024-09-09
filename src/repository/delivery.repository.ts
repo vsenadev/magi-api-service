@@ -70,7 +70,7 @@ export class DeliveryRepository {
 
   async deleteOneDelivery(dto: DeleteDeliveryDto): Promise<IReturnMessage> {
     const query = 'DELETE FROM public.delivery WHERE id = $1';
-    const param = [dto.id]; // Extract the ID from the DTO
+    const param = [dto.id];
     await this.db.query(query, param);
 
     return { message: 'Delivery deleted successfully' };
