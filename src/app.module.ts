@@ -9,6 +9,7 @@ import { CompanyModule } from './modules/company.module';
 import { EmployeeModule } from './modules/employee.module';
 import { ProductModule } from './modules/product.module';
 import { DeliveryModule } from './modules/delivery.module';
+import { ProductDeliveryModule } from './modules/productDelivery.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { DeliveryModule } from './modules/delivery.module';
     CompanyModule,
     EmployeeModule,
     ProductModule,
-    DeliveryModule
+    DeliveryModule,
+    ProductDeliveryModule
   ],
   controllers: [],
   providers: [DatabaseService],
