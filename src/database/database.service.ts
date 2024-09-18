@@ -21,12 +21,10 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
 
   async onModuleInit() {
     await this.client.connect();
-    console.log('Connected to PostgreSQL database');
   }
 
   async onModuleDestroy() {
     await this.client.end();
-    console.log('Disconnected from PostgreSQL database');
   }
 
   async query(

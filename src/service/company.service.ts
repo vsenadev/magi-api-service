@@ -29,8 +29,6 @@ export class CompanyService {
     try {
       const codeGenerated = this.codeGenerator.generateRandomPassword();
       data['password'] = await this.cryptography.hashPassword(codeGenerated);
-      console.log(codeGenerated);
-      console.log(data['password']);
       const newCompany = new CreateCompanyDto(data);
       await this.companyRepository.create(newCompany);
       await this.email.sendEmailWithCode(

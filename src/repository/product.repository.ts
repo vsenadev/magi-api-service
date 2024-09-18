@@ -3,7 +3,11 @@ import { DatabaseService } from '../database/database.service';
 import { IReturnMessage } from '../model/returnMessage.model';
 import { IDatabaseReturnModel } from '../model/databaseReturn.model';
 import { mountSqlUpdateKeysAndValues } from '../utils/mountSqlUpdateKeysAndValues.utils';
-import { CreateProductDto, DeleteProductDto, UpdateProductDto } from 'src/dto/Product.dto';
+import {
+  CreateProductDto,
+  DeleteProductDto,
+  UpdateProductDto,
+} from 'src/dto/Product.dto';
 import { IProduct } from 'src/model/Product.model';
 
 @Injectable()
@@ -17,9 +21,9 @@ export class ProductRepository {
       data.type,
       data.value,
       data.length,
-      data.width, 
+      data.width,
       data.height,
-      data.company_id
+      data.company_id,
     ];
 
     await this.db.query(query, values);
@@ -29,22 +33,25 @@ export class ProductRepository {
 
   async findAllProducts(): Promise<IProduct[] | object[]> {
     const query =
-      'SELECT p.id, p.name, p.lenght, p.width, p.height AS Product_informations FROM public.Product AS p JOIN public.company AS c ON c.id = p.company_id WHERE c.id = p.company_id;';    
-      const result: IDatabaseReturnModel = await this.db.query(query);
+      'SELECT p.id, p.name, p.lenght, p.width, p.height AS Product_informations FROM public.Product AS p JOIN public.company AS c ON c.id = p.company_id WHERE c.id = p.company_id;';
+    const result: IDatabaseReturnModel = await this.db.query(query);
 
     return result.rows;
   }
 
   async findOneProduct(id: number): Promise<IProduct | object> {
     const query =
-      "SELECT p.id, p.name, p.lenght, p.width, p.height AS Product_informations FROM public.Product AS p JOIN public.company AS c ON c.id = p.company_id WHERE c.id = ($1);"
-      const param = [id];
+      'SELECT p.id, p.name, p.lenght, p.width, p.height AS Product_informations FROM public.Product AS p JOIN public.company AS c ON c.id = p.company_id WHERE c.id = ($1);';
+    const param = [id];
     const result: IDatabaseReturnModel = await this.db.query(query, param);
 
     return result.rows[0];
   }
 
-  async updateOneProduct(id: number, data: UpdateProductDto): Promise<IReturnMessage> {
+  async updateOneProduct(
+    id: number,
+    data: UpdateProductDto,
+  ): Promise<IReturnMessage> {
     const { setQuery, queryParams } = await mountSqlUpdateKeysAndValues(
       id,
       data,
@@ -57,12 +64,11 @@ export class ProductRepository {
 
   async deleteOneProduct(dto: DeleteProductDto): Promise<IReturnMessage> {
     const query = 'DELETE FROM public.Product AS p WHERE p.id = ($1)';
-    const param = [dto.id];  // Extract the ID from the DTO
+    const param = [dto.id]; // Extract the ID from the DTO
     await this.db.query(query, param);
 
     return { message: 'Produto excluído com sucesso' };
-}
-
+  }
 
   async getCode(id: number): Promise<IReturnMessage | object> {
     const query = `DELETE FROM public.Product WHERE p.id = ($1)`;

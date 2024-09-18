@@ -11,13 +11,13 @@ export const CreateProductSchema = z.object({
 });
 
 export const UpdateProductSchema = z.object({
-    name: z.string().min(1).max(255).optional(),
-    type: z.string().min(1).optional(),
-    value: z.number().min(1).max(14).optional(),
-    length: z.number().min(1).max(14).optional(),
-    width: z.number().min(1).optional(),
-    height: z.number().min(1).optional(),
-    company_id: z.number().min(1).optional(),
+  name: z.string().min(1).max(255).optional(),
+  type: z.string().min(1).optional(),
+  value: z.number().min(1).max(14).optional(),
+  length: z.number().min(1).max(14).optional(),
+  width: z.number().min(1).optional(),
+  height: z.number().min(1).optional(),
+  company_id: z.number().min(1).optional(),
 });
 
 export const DeleteProductSchema = {

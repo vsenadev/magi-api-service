@@ -2,14 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { ZodError } from 'zod';
 import { ValidationException } from '../exceptions/validation.exception';
 import { IReturnMessage } from '../model/returnMessage.model';
-import {
-  ValidateCodeDto,
-} from '../dto/Product.dto';
+import { ValidateCodeDto } from '../dto/Product.dto';
 import { Cryptography } from '../utils/cryptograph.utils';
 import { Express } from 'express';
 import axios from 'axios';
 import { ProductRepository } from 'src/repository/Product.repository';
-import { CreateProductDto, DeleteProductDto, UpdateProductDto } from 'src/dto/Product.dto';
+import {
+  CreateProductDto,
+  DeleteProductDto,
+  UpdateProductDto,
+} from 'src/dto/Product.dto';
 import { IProduct } from 'src/model/Product.model';
 
 @Injectable()

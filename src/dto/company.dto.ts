@@ -1,9 +1,10 @@
 import {
   CreateCompanySchema,
   DeleteCompanySchema,
-  UpdateCompanySchema, ValidateCodeSchema
-} from "../schema/company.schema";
-import { ICompany, ICompanyCode } from "../model/company.model";
+  UpdateCompanySchema,
+  ValidateCodeSchema,
+} from '../schema/company.schema';
+import { ICompany, ICompanyCode } from '../model/company.model';
 
 export class CreateCompanyDto {
   name: string;

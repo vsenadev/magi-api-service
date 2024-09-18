@@ -28,8 +28,8 @@ export class Email {
             </div>
             <p style="font-size: 14px; color: #333333; text-align: center;">Para liberar a criação da senha, digite o código abaixo:</p>
             <div style="text-align: center; font-size: 20px; color: #333333; margin: 20px 0;">
-              <div style="display: inline-block; padding: 10px; border: 1px solid #333333; border-radius: 8%; margin: 5px;"><strong>${code.charAt(1)}</strong></div>
               <div style="display: inline-block; padding: 10px; border: 1px solid #333333; border-radius: 8%; margin: 5px;"><strong>${code.charAt(0)}</strong></div>
+              <div style="display: inline-block; padding: 10px; border: 1px solid #333333; border-radius: 8%; margin: 5px;"><strong>${code.charAt(1)}</strong></div>
               <div style="display: inline-block; padding: 10px; border: 1px solid #333333; border-radius: 8%; margin: 5px;"><strong>${code.charAt(2)}</strong></div>
               <div style="display: inline-block; padding: 10px; border: 1px solid #333333; border-radius: 8%; margin: 5px;"><strong>${code.charAt(3)}</strong></div>
               <div style="display: inline-block; padding: 10px; border: 1px solid #333333; border-radius: 8%; margin: 5px;"><strong>${code.charAt(4)}</strong></div>

@@ -1,3 +1,4 @@
 export interface IReturnMessage {
-  message: string | boolean;
+  status?: boolean;
+  message: string | boolean | object;
 }

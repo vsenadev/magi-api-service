@@ -2,16 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { ZodError } from 'zod';
 import { ValidationException } from '../exceptions/validation.exception';
 import { IReturnMessage } from '../model/returnMessage.model';
-import {
-  ValidateCodeDto,
-} from '../dto/employee.dto';
+import { ValidateCodeDto } from '../dto/employee.dto';
 import { RandomCode } from '../utils/randomCode.utils';
 import { Cryptography } from '../utils/cryptograph.utils';
 import { Email } from '../utils/Email.utils';
 import { Express } from 'express';
 import axios from 'axios';
 import { EmployeeRepository } from 'src/repository/employee.repository';
-import { CreateEmployeeDto, DeleteEmployeeDto, UpdateEmployeeDto } from 'src/dto/employee.dto';
+import {
+  CreateEmployeeDto,
+  DeleteEmployeeDto,
+  UpdateEmployeeDto,
+} from 'src/dto/employee.dto';
 import { IEmployee } from 'src/model/employee.model';
 
 @Injectable()
@@ -27,8 +29,6 @@ export class EmployeeService {
     try {
       const codeGenerated = this.codeGenerator.generateRandomPassword();
       data['password'] = await this.cryptography.hashPassword(codeGenerated);
-      console.log(codeGenerated);
-      console.log(data['password']);
       const newEmployee = new CreateEmployeeDto(data);
       await this.employeeRepository.create(newEmployee);
       await this.email.sendEmailWithCode(
@@ -71,7 +71,10 @@ export class EmployeeService {
   ): Promise<IReturnMessage> {
     try {
       const updateEmployee = new UpdateEmployeeDto(data);
-      return await this.employeeRepository.updateOneEmployee(id, updateEmployee);
+      return await this.employeeRepository.updateOneEmployee(
+        id,
+        updateEmployee,
+      );
     } catch (error) {
       if (error instanceof ZodError) {
         throw new ValidationException(error);
