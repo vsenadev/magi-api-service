@@ -10,14 +10,14 @@ import {
   UseInterceptors,
   UploadedFile,
 } from '@nestjs/common';
-import { IReturnMessage } from '@src/model/returnMessage.model';
-import { CompanyService } from '@src/service/company.service';
+import { IReturnMessage } from '@src/model/ReturnMessage.model';
+import { CompanyService } from '@src/service/Company.service';
 import {
   CreateCompanyDto,
   UpdateCompanyDto,
   ValidateCodeDto,
-} from '@src/dto/company.dto';
-import { ICompany } from '@src/model/company.model';
+} from '@src/dto/Company.dto';
+import { ICompany } from '@src/model/Company.model';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 

@@ -8,13 +8,13 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { TypeAccountService } from '@src/service/typeAccount.service';
+import { TypeAccountService } from '@src/service/TypeAccount.service';
 import {
   CreateTypeAccountDto,
   UpdateTypeAccountDto,
-} from '@src/dto/typeAccount.dto';
-import { IReturnMessage } from '@src/model/returnMessage.model';
-import { ITypeAccount } from '@src/model/typeAccount.model';
+} from '@src/dto/TypeAccount.dto';
+import { IReturnMessage } from '@src/model/ReturnMessage.model';
+import { ITypeAccount } from '@src/model/TypeAccount.model';
 
 @Controller('v1/typeaccount')
 export class TypeAccountController {

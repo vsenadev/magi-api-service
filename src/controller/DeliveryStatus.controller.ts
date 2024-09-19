@@ -8,13 +8,13 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { DeliveryStatusService } from '@src/service/deliveryStatus.service';
+import { DeliveryStatusService } from '@src/service/DeliveryStatus.service';
 import {
   CreateDeliveryStatusDto,
   UpdateDeliveryStatusDto,
-} from '@src/dto/deliveryStatus.dto';
-import { IReturnMessage } from '@src/model/returnMessage.model';
-import { IDeliveryStatus } from '@src/model/deliveryStatus.model';
+} from '@src/dto/DeliveryStatus.dto';
+import { IReturnMessage } from '@src/model/ReturnMessage.model';
+import { IDeliveryStatus } from '@src/model/DeliveryStatus.model';
 
 @Controller('v1/deliverystatus')
 export class DeliveryStatusController {

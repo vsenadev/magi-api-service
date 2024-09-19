@@ -10,10 +10,10 @@ import {
   UseInterceptors,
   UploadedFile,
 } from '@nestjs/common';
-import { IReturnMessage } from '@src/model/returnMessage.model';
+import { IReturnMessage } from '@src/model/ReturnMessage.model';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
-import { DeliveryService } from '@src/service/delivery.service';
+import { DeliveryService } from '@src/service/Delivery.service';
 import {
   CreateDeliveryDto,
   UpdateDeliveryDto,

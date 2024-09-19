@@ -8,13 +8,13 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { StatusAccountService } from '@src/service/statusAccount.service';
+import { StatusAccountService } from '@src/service/StatusAccount.service';
 import {
   CreateStatusAccountDto,
   UpdateStatusAccountDto,
-} from '@src/dto/statusAccount.dto';
-import { IReturnMessage } from '@src/model/returnMessage.model';
-import { IStatusAccount } from '@src/model/statusAccount.model';
+} from '@src/dto/StatusAccount.dto';
+import { IReturnMessage } from '@src/model/ReturnMessage.model';
+import { IStatusAccount } from '@src/model/StatusAccount.model';
 
 @Controller('v1/statusaccount')
 export class StatusAccountController {

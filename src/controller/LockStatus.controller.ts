@@ -8,13 +8,13 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { LockStatusService } from '@src/service/lockStatus.service';
+import { LockStatusService } from '@src/service/LockStatus.service';
 import {
   CreateLockStatusDto,
   UpdateLockStatusDto,
-} from '@src/dto/lockStatus.dto';
-import { IReturnMessage } from '@src/model/returnMessage.model';
-import { ILockStatus } from '@src/model/lockStatus.model';
+} from '@src/dto/LockStatus.dto';
+import { IReturnMessage } from '@src/model/ReturnMessage.model';
+import { ILockStatus } from '@src/model/LockStatus.model';
 
 @Controller('v1/lockstatus')
 export class LockStatusController {
