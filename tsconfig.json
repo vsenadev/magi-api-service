@@ -1,24 +1,3 @@
-//{
-//  "compilerOptions": {
-//    "module": "commonjs",
-//    "declaration": true,
-//    "removeComments": true,
-//    "emitDecoratorMetadata": true,
-//    "experimentalDecorators": true,
-//    "allowSyntheticDefaultImports": true,
-//    "target": "ES2021",
-//    "sourceMap": true,
-//    "outDir": "./dist",
-//    "baseUrl": "./",
-//    "incremental": true,
-//    "skipLibCheck": true,
-//    "strictNullChecks": false,
-//    "noImplicitAny": false,
-//    "strictBindCallApply": false,
-//    "forceConsistentCasingInFileNames": false,
-//    "noFallthroughCasesInSwitch": false
-//  }
-//}
 {
   "compilerOptions": {
     "module": "commonjs",
@@ -31,16 +10,12 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "paths": {
-      "@src/*": ["src/*"]   // Adicionando mapeamento de caminho para 'src'
-    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": true,  // Habilitar verificação de case para evitar erros no ambiente Linux
-    "noFallthroughCasesInSwitch": true
-  },
-  "exclude": ["node_modules", "dist"]  // Evitar que o compilador analise essas pastas
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
+  }
 }
