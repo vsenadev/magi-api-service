@@ -1,6 +1,6 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { Client } from 'pg';
-import { IDatabaseReturnModel } from '../model/databaseReturn.model';
+import { IDatabaseReturnModel } from '@src/model/databaseReturn.model';
 
 @Injectable()
 export class DatabaseService implements OnModuleInit, OnModuleDestroy {
