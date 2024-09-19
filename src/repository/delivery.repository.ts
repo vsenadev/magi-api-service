@@ -8,7 +8,7 @@ import {
   DeleteDeliveryDto,
   UpdateDeliveryDto,
 } from 'src/dto/Delivery.dto';
-import { IDelivery } from 'src/model/Delivery.model';
+import { IDelivery } from '@src/model/Delivery.model';
 
 @Injectable()
 export class DeliveryRepository {

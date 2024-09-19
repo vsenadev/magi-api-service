@@ -8,15 +8,15 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { LockStatusService } from '../service/lockStatus.service';
+import { LockStatusService } from '@src/service/lockStatus.service';
 import {
   CreateLockStatusDto,
   UpdateLockStatusDto,
-} from '../dto/lockStatus.dto';
-import { IReturnMessage } from '../model/returnMessage.model';
-import { ILockStatus } from '../model/lockStatus.model';
+} from '@src/dto/lockStatus.dto';
+import { IReturnMessage } from '@src/model/returnMessage.model';
+import { ILockStatus } from '@src/model/lockStatus.model';
 
-@Controller('api/v1/lockstatus')
+@Controller('v1/lockstatus')
 export class LockStatusController {
   constructor(private readonly lockStatusService: LockStatusService) {}
 

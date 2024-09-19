@@ -10,18 +10,18 @@ import {
   UseInterceptors,
   UploadedFile,
 } from '@nestjs/common';
-import { IReturnMessage } from '../model/returnMessage.model';
-import { CompanyService } from '../service/company.service';
+import { IReturnMessage } from '@src/model/returnMessage.model';
+import { CompanyService } from '@src/service/company.service';
 import {
   CreateCompanyDto,
   UpdateCompanyDto,
   ValidateCodeDto,
-} from '../dto/company.dto';
-import { ICompany } from '../model/company.model';
+} from '@src/dto/company.dto';
+import { ICompany } from '@src/model/company.model';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 
-@Controller('api/v1/company')
+@Controller('v1/company')
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 

@@ -1,4 +1,4 @@
-import { IDelivery, IDeliveryCode } from 'src/model/Delivery.model';
+import { IDelivery, IDeliveryCode } from '@src/model/Delivery.model';
 import { ValidateCodeSchema } from '../schema/employee.schema';
 import {
   CreateDeliverySchema,

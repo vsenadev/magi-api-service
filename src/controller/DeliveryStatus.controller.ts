@@ -8,15 +8,15 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { DeliveryStatusService } from '../service/deliveryStatus.service';
+import { DeliveryStatusService } from '@src/service/deliveryStatus.service';
 import {
   CreateDeliveryStatusDto,
   UpdateDeliveryStatusDto,
-} from '../dto/deliveryStatus.dto';
-import { IReturnMessage } from '../model/returnMessage.model';
-import { IDeliveryStatus } from '../model/deliveryStatus.model';
+} from '@src/dto/deliveryStatus.dto';
+import { IReturnMessage } from '@src/model/returnMessage.model';
+import { IDeliveryStatus } from '@src/model/deliveryStatus.model';
 
-@Controller('api/v1/deliverystatus')
+@Controller('v1/deliverystatus')
 export class DeliveryStatusController {
   constructor(private readonly deliveryStatusService: DeliveryStatusService) {}
 

@@ -7,7 +7,7 @@ import * as process from 'node:process';
 import { CompanyRepository } from '../repository/company.repository';
 import { EmployeeRepository } from '../repository/employee.repository';
 import { DatabaseService } from '../database/database.service';
-import { LoginController } from '../controller/login.controller';
+import { LoginController } from '../controller/Login.controller';
 import { Cryptography } from '../utils/cryptograph.utils';
 
 @Module({

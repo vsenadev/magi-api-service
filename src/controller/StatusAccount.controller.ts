@@ -8,15 +8,15 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { StatusAccountService } from '../service/statusAccount.service';
+import { StatusAccountService } from '@src/service/statusAccount.service';
 import {
   CreateStatusAccountDto,
   UpdateStatusAccountDto,
-} from '../dto/statusAccount.dto';
-import { IReturnMessage } from '../model/returnMessage.model';
-import { IStatusAccount } from '../model/statusAccount.model';
+} from '@src/dto/statusAccount.dto';
+import { IReturnMessage } from '@src/model/returnMessage.model';
+import { IStatusAccount } from '@src/model/statusAccount.model';
 
-@Controller('api/v1/statusaccount')
+@Controller('v1/statusaccount')
 export class StatusAccountController {
   constructor(private readonly statusAccountService: StatusAccountService) {}
 

@@ -3,7 +3,7 @@ import { DatabaseService } from '../database/database.service';
 import { RandomCode } from '../utils/randomCode.utils';
 import { Cryptography } from '../utils/cryptograph.utils';
 import { Email } from '../utils/Email.utils';
-import { DeliveryController } from 'src/controller/Delivery.controller';
+import { DeliveryController } from '@src/controller/Delivery.controller';
 import { DeliveryService } from 'src/service/delivery.service';
 import { DeliveryRepository } from 'src/repository/Delivery.repository';
 

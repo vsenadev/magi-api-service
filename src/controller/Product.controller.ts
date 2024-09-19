@@ -10,18 +10,18 @@ import {
   UseInterceptors,
   UploadedFile,
 } from '@nestjs/common';
-import { IReturnMessage } from '../model/returnMessage.model';
+import { IReturnMessage } from '@src/model/returnMessage.model';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
-import { IProduct } from 'src/model/product.model';
-import { ProductService } from 'src/service/product.service';
+import { IProduct } from '@src/model/product.model';
+import { ProductService } from '@src/service/product.service';
 import {
   CreateProductDto,
   UpdateProductDto,
   ValidateCodeDto,
-} from 'src/dto/Product.dto';
+} from '@src/dto/Product.dto';
 
-@Controller('api/v1/product')
+@Controller('v1/product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 

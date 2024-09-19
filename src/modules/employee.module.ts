@@ -3,7 +3,7 @@ import { DatabaseService } from '../database/database.service';
 import { RandomCode } from '../utils/randomCode.utils';
 import { Cryptography } from '../utils/cryptograph.utils';
 import { Email } from '../utils/Email.utils';
-import { EmployeeController } from 'src/controller/employee.controller';
+import { EmployeeController } from '@src/controller/Employee.controller';
 import { EmployeeRepository } from 'src/repository/employee.repository';
 import { EmployeeService } from 'src/service/employee.service';
 

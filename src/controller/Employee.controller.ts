@@ -10,15 +10,15 @@ import {
   UseInterceptors,
   UploadedFile,
 } from '@nestjs/common';
-import { IReturnMessage } from '../model/returnMessage.model';
-import { UpdateEmployeeDto, ValidateCodeDto } from '../dto/employee.dto';
+import { IReturnMessage } from '@src/model/returnMessage.model';
+import { UpdateEmployeeDto, ValidateCodeDto } from '@src/dto/employee.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
-import { EmployeeService } from 'src/service/employee.service';
-import { CreateEmployeeDto } from 'src/dto/employee.dto';
-import { IEmployee } from 'src/model/employee.model';
+import { EmployeeService } from '@src/service/employee.service';
+import { CreateEmployeeDto } from '@src/dto/employee.dto';
+import { IEmployee } from '@src/model/employee.model';
 
-@Controller('api/v1/employee')
+@Controller('v1/employee')
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 

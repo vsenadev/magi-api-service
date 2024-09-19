@@ -7,6 +7,9 @@ dotenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  const globalPrefix = 'api';
+  app.setGlobalPrefix(globalPrefix);
+
   app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader(

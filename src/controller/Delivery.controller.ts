@@ -10,18 +10,18 @@ import {
   UseInterceptors,
   UploadedFile,
 } from '@nestjs/common';
-import { IReturnMessage } from '../model/returnMessage.model';
+import { IReturnMessage } from '@src/model/returnMessage.model';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
-import { IDelivery } from 'src/model/Delivery.model';
-import { DeliveryService } from 'src/service/delivery.service';
+import { DeliveryService } from '@src/service/delivery.service';
 import {
   CreateDeliveryDto,
   UpdateDeliveryDto,
   ValidateCodeDto,
-} from 'src/dto/Delivery.dto';
+} from '@src/dto/Delivery.dto';
+import { IDelivery } from '@src/model/Delivery.model';
 
-@Controller('api/v1/delivery')
+@Controller('v1/delivery')
 export class DeliveryController {
   constructor(private readonly deliveryService: DeliveryService) {}
 
