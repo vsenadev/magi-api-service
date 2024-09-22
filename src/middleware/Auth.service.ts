@@ -42,7 +42,11 @@ export class AuthService {
           },
         };
       } else {
-        return { status: false, message: 'Conta inválida' };
+        return {
+          status: false,
+          message:
+            'Não foi possível realizar o login. Verifique se o tipo de conta, o nome de usuário ou a senha estão corretos e tente novamente.',
+        };
       }
     } catch (error) {
       if (error instanceof ZodError) {
