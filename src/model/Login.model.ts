@@ -7,3 +7,9 @@ export interface ILogin {
   type_id?: number;
   updated_at?: Date;
 }
+
+export interface ILoginPayload {
+  email: string;
+  role: boolean;
+  type: number;
+}

@@ -3,6 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { AuthService } from '@src/middleware/Auth.service';
 import * as process from 'node:process';
+import { ILoginPayload } from "@src/model/Login.model";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -14,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
-    return await this.authService.validateUser(payload.userId);
+  async validate(payload: ILoginPayload) {
+    return await this.authService.validateToken(payload);
   }
 }

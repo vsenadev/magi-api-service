@@ -1,13 +1,13 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { Client } from 'pg';
-import { IDatabaseReturnModel } from '@src/model/DatabaseReturn.model'; // Certifique-se de que este arquivo/modelo esteja corretamente implementado
+import { IDatabaseReturnModel } from '@src/model/DatabaseReturn.model';
 
 @Injectable()
 export class DatabaseService implements OnModuleInit, OnModuleDestroy {
   private client: Client;
 
   constructor() {
-    const sslEnabled = process.env.PG_SSL === 'true'; // Verifica se SSL está habilitado nas variáveis de ambiente
+    const sslEnabled = process.env.PG_SSL === 'true';
 
     this.client = new Client({
       host: process.env.PG_HOST,
