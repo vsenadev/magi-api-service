@@ -4,9 +4,19 @@ import {
   DeleteStatusAccountSchema,
   UpdateStatusAccountSchema,
 } from '@src/schema/StatusAccount.schema';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateStatusAccountDto {
+  @ApiProperty({
+    description: 'Name of the status account',
+    example: 'Active',
+  })
   name: string;
+
+  @ApiProperty({
+    description: 'Description of the status account',
+    example: 'The account is currently active.',
+  })
   description: string;
 
   constructor(props: IStatusAccount) {
@@ -17,10 +27,21 @@ export class CreateStatusAccountDto {
 }
 
 export class UpdateStatusAccountDto {
+  @ApiProperty({
+    description: 'Name of the status account (optional)',
+    example: 'Inactive',
+    required: false,
+  })
   name?: string;
+
+  @ApiProperty({
+    description: 'Description of the status account (optional)',
+    example: 'The account is currently inactive.',
+    required: false,
+  })
   description?: string;
 
-  constructor(props: IStatusAccount) {
+  constructor(props: Partial<IStatusAccount>) {
     const parsed = UpdateStatusAccountSchema.parse(props);
     this.name = parsed.name;
     this.description = parsed.description;
@@ -28,6 +49,10 @@ export class UpdateStatusAccountDto {
 }
 
 export class DeleteStatusAccountDto {
+  @ApiProperty({
+    description: 'ID of the status account to be deleted',
+    example: 1,
+  })
   id: number;
 
   constructor(props: number) {
