@@ -133,7 +133,8 @@ export class UpdateEmployeeDto {
   })
   status_id?: number;
 
-  constructor(props: Partial<IEmployee>) { // Accepting a partial type
+  constructor(props: Partial<IEmployee>) {
+    // Accepting a partial type
     const parsed = UpdateEmployeeSchema.parse(props);
     this.name = parsed.name;
     this.company_id = parsed.company_id;

@@ -15,7 +15,10 @@ export class LoginController {
   @Post()
   @ApiOperation({ summary: 'Validate user login credentials' })
   @ApiResponse({ status: 200, description: 'Login validation successful.' })
-  @ApiResponse({ status: 401, description: 'Unauthorized: Invalid credentials.' })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized: Invalid credentials.',
+  })
   @ApiBody({ type: ValidateLoginDto })
   async validateLogin(@Body() body: ValidateLoginDto): Promise<IReturnMessage> {
     return await this.loginService.validateUser(body);
@@ -24,8 +27,14 @@ export class LoginController {
   @Get('')
   @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Get login information for the authenticated user' })
-  @ApiResponse({ status: 200, description: 'User login information retrieved successfully.' })
-  @ApiResponse({ status: 401, description: 'Unauthorized: Token missing or invalid.' })
+  @ApiResponse({
+    status: 200,
+    description: 'User login information retrieved successfully.',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized: Token missing or invalid.',
+  })
   async getLoginInformation(@Req() req: Request) {
     const payload: ILoginPayload | any = req.user;
     return {

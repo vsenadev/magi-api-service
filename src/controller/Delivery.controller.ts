@@ -49,7 +49,10 @@ export class DeliveryController {
 
   @Get()
   @ApiOperation({ summary: 'Get all deliveries' })
-  @ApiResponse({ status: 200, description: 'Deliveries retrieved successfully.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Deliveries retrieved successfully.',
+  })
   @ApiResponse({ status: 500, description: 'Backend failed.' })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })

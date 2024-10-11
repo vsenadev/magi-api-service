@@ -41,7 +41,8 @@ export class UpdateLockStatusDto {
   })
   description?: string;
 
-  constructor(props: Partial<ILockStatus>) { // Accepting a partial type
+  constructor(props: Partial<ILockStatus>) {
+    // Accepting a partial type
     const parsed = UpdateLockStatusSchema.parse(props);
     this.name = parsed.name;
     this.description = parsed.description;

@@ -15,31 +15,42 @@ import {
 } from '@src/dto/DeliveryStatus.dto';
 import { IReturnMessage } from '@src/model/ReturnMessage.model';
 import { IDeliveryStatus } from '@src/model/DeliveryStatus.model';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @Controller('v1/deliverystatus')
 @ApiTags('Delivery-Status')
 export class DeliveryStatusController {
-  constructor(private readonly deliveryStatusService: DeliveryStatusService) { }
+  constructor(private readonly deliveryStatusService: DeliveryStatusService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a new delivery status' }) 
-  @ApiResponse({ status: 201, description: 'Delivery status created successfully.' }) 
+  @ApiOperation({ summary: 'Create a new delivery status' })
+  @ApiResponse({
+    status: 201,
+    description: 'Delivery status created successfully.',
+  })
   @ApiResponse({ status: 400, description: 'Validation failed.' })
   @ApiResponse({ status: 500, description: 'Backend failed.' })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
-  @ApiBody({ type: CreateDeliveryStatusDto }) 
+  @ApiBody({ type: CreateDeliveryStatusDto })
   async createDeliveryStatus(
     @Body() body: CreateDeliveryStatusDto,
   ): Promise<IReturnMessage> {
     return await this.deliveryStatusService.createDeliveryStatus(body);
   }
 
-
   @Get()
-  @ApiOperation({ summary: 'get all delivery status by ID' }) 
-  @ApiResponse({ status: 201, description: 'delivery status finded successfully.' }) 
+  @ApiOperation({ summary: 'get all delivery status by ID' })
+  @ApiResponse({
+    status: 201,
+    description: 'delivery status finded successfully.',
+  })
   @ApiResponse({ status: 400, description: 'Validation failed.' })
   @ApiResponse({ status: 500, description: 'backend failed.' })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
@@ -50,8 +61,11 @@ export class DeliveryStatusController {
 
   @Get(':id')
   @ApiParam({ name: 'id', description: 'delivery status ID', example: '123' })
-  @ApiOperation({ summary: 'get a especific delivery status by ID' }) 
-  @ApiResponse({ status: 201, description: 'delivery status finded successfully.' }) 
+  @ApiOperation({ summary: 'get a especific delivery status by ID' })
+  @ApiResponse({
+    status: 201,
+    description: 'delivery status finded successfully.',
+  })
   @ApiResponse({ status: 400, description: 'Validation failed.' })
   @ApiResponse({ status: 500, description: 'backend failed.' })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
@@ -63,13 +77,16 @@ export class DeliveryStatusController {
   }
 
   @Put(':id')
-  @ApiOperation({ summary: 'Update a existing delivery status' }) 
-  @ApiResponse({ status: 201, description: 'Delivery status been updated successfully.' }) 
+  @ApiOperation({ summary: 'Update a existing delivery status' })
+  @ApiResponse({
+    status: 201,
+    description: 'Delivery status been updated successfully.',
+  })
   @ApiResponse({ status: 400, description: 'Validation failed.' })
   @ApiResponse({ status: 500, description: 'Backend failed.' })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
-  @ApiBody({ type: UpdateDeliveryStatusDto }) 
+  @ApiBody({ type: UpdateDeliveryStatusDto })
   async updateOneDeliveryStatus(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateBody: UpdateDeliveryStatusDto,
@@ -82,8 +99,11 @@ export class DeliveryStatusController {
 
   @Delete(':id')
   @ApiParam({ name: 'id', description: 'delivery status ID', example: '123' })
-  @ApiOperation({ summary: 'delete a especific delivery status by ID' }) 
-  @ApiResponse({ status: 201, description: 'delivery status deleted successfully.' }) 
+  @ApiOperation({ summary: 'delete a especific delivery status by ID' })
+  @ApiResponse({
+    status: 201,
+    description: 'delivery status deleted successfully.',
+  })
   @ApiResponse({ status: 400, description: 'Validation failed.' })
   @ApiResponse({ status: 500, description: 'backend failed.' })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })

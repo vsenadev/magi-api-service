@@ -11,7 +11,11 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { IReturnMessage } from '@src/model/ReturnMessage.model';
-import { UpdateEmployeeDto, ValidateCodeDto, CreateEmployeeDto } from '@src/dto/Employee.dto';
+import {
+  UpdateEmployeeDto,
+  ValidateCodeDto,
+  CreateEmployeeDto,
+} from '@src/dto/Employee.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import { EmployeeService } from '@src/service/Employee.service';
@@ -45,7 +49,10 @@ export class EmployeeController {
 
   @Get()
   @ApiOperation({ summary: 'Get all employees' })
-  @ApiResponse({ status: 200, description: 'Employees retrieved successfully.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Employees retrieved successfully.',
+  })
   @ApiResponse({ status: 500, description: 'Backend failed.' })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })

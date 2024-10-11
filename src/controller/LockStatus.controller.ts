@@ -30,7 +30,10 @@ export class LockStatusController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new lock status' })
-  @ApiResponse({ status: 201, description: 'Lock status created successfully.' })
+  @ApiResponse({
+    status: 201,
+    description: 'Lock status created successfully.',
+  })
   @ApiResponse({ status: 400, description: 'Validation failed.' })
   @ApiResponse({ status: 500, description: 'Backend failed.' })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
@@ -44,7 +47,10 @@ export class LockStatusController {
 
   @Get()
   @ApiOperation({ summary: 'Get all lock statuses' })
-  @ApiResponse({ status: 200, description: 'Lock statuses retrieved successfully.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Lock statuses retrieved successfully.',
+  })
   @ApiResponse({ status: 500, description: 'Backend failed.' })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
@@ -68,7 +74,10 @@ export class LockStatusController {
   @Put(':id')
   @ApiParam({ name: 'id', description: 'Lock status ID', example: '123' })
   @ApiOperation({ summary: 'Update an existing lock status' })
-  @ApiResponse({ status: 200, description: 'Lock status updated successfully.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Lock status updated successfully.',
+  })
   @ApiResponse({ status: 400, description: 'Validation failed.' })
   @ApiResponse({ status: 404, description: 'Lock status not found.' })
   @ApiBody({ type: UpdateLockStatusDto })
@@ -82,7 +91,10 @@ export class LockStatusController {
   @Delete(':id')
   @ApiParam({ name: 'id', description: 'Lock status ID', example: '123' })
   @ApiOperation({ summary: 'Delete a specific lock status by ID' })
-  @ApiResponse({ status: 200, description: 'Lock status deleted successfully.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Lock status deleted successfully.',
+  })
   @ApiResponse({ status: 404, description: 'Lock status not found.' })
   @ApiResponse({ status: 500, description: 'Backend failed.' })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })

@@ -24,8 +24,14 @@ export class TypeAccountController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new type account' })
-  @ApiResponse({ status: 201, description: 'Type account created successfully.' })
-  @ApiResponse({ status: 400, description: 'Bad Request: Invalid type account data.' })
+  @ApiResponse({
+    status: 201,
+    description: 'Type account created successfully.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request: Invalid type account data.',
+  })
   @ApiBody({ type: CreateTypeAccountDto })
   async createTypeAccount(
     @Body() body: CreateTypeAccountDto,
@@ -35,15 +41,24 @@ export class TypeAccountController {
 
   @Get()
   @ApiOperation({ summary: 'Retrieve all type accounts' })
-  @ApiResponse({ status: 200, description: 'List of all type accounts retrieved successfully.' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of all type accounts retrieved successfully.',
+  })
   async findAllTypeAccount(): Promise<ITypeAccount[]> {
     return await this.typeAccountService.findAllTypeAccount();
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Retrieve a type account by ID' })
-  @ApiResponse({ status: 200, description: 'Type account retrieved successfully.' })
-  @ApiResponse({ status: 404, description: 'Not Found: Type account not found.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Type account retrieved successfully.',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found: Type account not found.',
+  })
   async findOneTypeAccount(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<ITypeAccount> {
@@ -52,9 +67,18 @@ export class TypeAccountController {
 
   @Put(':id')
   @ApiOperation({ summary: 'Update a type account by ID' })
-  @ApiResponse({ status: 200, description: 'Type account updated successfully.' })
-  @ApiResponse({ status: 404, description: 'Not Found: Type account not found.' })
-  @ApiResponse({ status: 400, description: 'Bad Request: Invalid type account data.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Type account updated successfully.',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found: Type account not found.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request: Invalid type account data.',
+  })
   @ApiBody({ type: UpdateTypeAccountDto })
   async updateOneTypeAccount(
     @Param('id', ParseIntPipe) id: number,
@@ -65,8 +89,14 @@ export class TypeAccountController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a type account by ID' })
-  @ApiResponse({ status: 200, description: 'Type account deleted successfully.' })
-  @ApiResponse({ status: 404, description: 'Not Found: Type account not found.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Type account deleted successfully.',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found: Type account not found.',
+  })
   async deleteOneTypeAccount(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<IReturnMessage> {

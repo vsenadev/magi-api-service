@@ -30,7 +30,10 @@ export class ProductController {
   @Post()
   @ApiOperation({ summary: 'Create a new product' })
   @ApiResponse({ status: 201, description: 'Product created successfully.' })
-  @ApiResponse({ status: 400, description: 'Bad Request: Invalid product data.' })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request: Invalid product data.',
+  })
   @ApiBody({ type: CreateProductDto })
   async createProduct(@Body() body: CreateProductDto): Promise<IReturnMessage> {
     return await this.productService.createProduct(body);
@@ -38,7 +41,10 @@ export class ProductController {
 
   @Get()
   @ApiOperation({ summary: 'Retrieve all products' })
-  @ApiResponse({ status: 200, description: 'List of all products retrieved successfully.' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of all products retrieved successfully.',
+  })
   async findAllProduct(): Promise<IProduct[]> {
     return await this.productService.findAllProducts();
   }
@@ -57,7 +63,10 @@ export class ProductController {
   @ApiOperation({ summary: 'Update a product by ID' })
   @ApiResponse({ status: 200, description: 'Product updated successfully.' })
   @ApiResponse({ status: 404, description: 'Not Found: Product not found.' })
-  @ApiResponse({ status: 400, description: 'Bad Request: Invalid product data.' })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request: Invalid product data.',
+  })
   @ApiBody({ type: UpdateProductDto })
   async updateOnProduct(
     @Param('id', ParseIntPipe) id: number,
@@ -78,7 +87,10 @@ export class ProductController {
 
   @Put('code/:id')
   @ApiOperation({ summary: 'Validate product code by ID' })
-  @ApiResponse({ status: 200, description: 'Product code validated successfully.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Product code validated successfully.',
+  })
   @ApiResponse({ status: 404, description: 'Not Found: Product not found.' })
   async validateCode(
     @Param('id', ParseIntPipe) id: number,

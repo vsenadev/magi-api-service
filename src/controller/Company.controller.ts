@@ -47,7 +47,10 @@ export class CompanyController {
 
   @Get()
   @ApiOperation({ summary: 'Get all companies' })
-  @ApiResponse({ status: 200, description: 'Companies retrieved successfully.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Companies retrieved successfully.',
+  })
   @ApiResponse({ status: 500, description: 'Backend failed.' })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })

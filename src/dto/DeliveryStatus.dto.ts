@@ -1,5 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { CreateDeliveryStatusSchema, DeleteDeliveryStatusSchema, UpdateDeliveryStatusSchema } from '@src/schema/DeliveryStatus.schema';
+import {
+  CreateDeliveryStatusSchema,
+  DeleteDeliveryStatusSchema,
+  UpdateDeliveryStatusSchema,
+} from '@src/schema/DeliveryStatus.schema';
 import { IDeliveryStatus } from '@src/model/DeliveryStatus.model';
 
 export class CreateDeliveryStatusDto {
@@ -37,7 +41,8 @@ export class UpdateDeliveryStatusDto {
   })
   description?: string;
 
-  constructor(props: Partial<IDeliveryStatus>) { // Accepting a partial type
+  constructor(props: Partial<IDeliveryStatus>) {
+    // Accepting a partial type
     const parsed = UpdateDeliveryStatusSchema.parse(props);
     this.name = parsed.name;
     this.description = parsed.description;

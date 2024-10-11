@@ -18,13 +18,15 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Authorization',
     credentials: true,
   };
-  
+
   app.enableCors(corsOptions);
 
   // Swagger setup
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Magi API Service') // Set your API title
-    .setDescription('A backend service to track orders and manage location in real time') // Set a description for your API
+    .setDescription(
+      'A backend service to track orders and manage location in real time',
+    ) // Set a description for your API
     .setVersion('1.0') // Set the version of your API
     .addTag('Methods and endpoints') // Add tags as needed
     .build();

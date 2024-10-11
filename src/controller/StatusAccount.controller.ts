@@ -24,8 +24,14 @@ export class StatusAccountController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new status account' })
-  @ApiResponse({ status: 201, description: 'Status account created successfully.' })
-  @ApiResponse({ status: 400, description: 'Bad Request: Invalid status account data.' })
+  @ApiResponse({
+    status: 201,
+    description: 'Status account created successfully.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request: Invalid status account data.',
+  })
   @ApiBody({ type: CreateStatusAccountDto })
   async createStatusAccount(
     @Body() body: CreateStatusAccountDto,
@@ -35,15 +41,24 @@ export class StatusAccountController {
 
   @Get()
   @ApiOperation({ summary: 'Retrieve all status accounts' })
-  @ApiResponse({ status: 200, description: 'List of all status accounts retrieved successfully.' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of all status accounts retrieved successfully.',
+  })
   async findAllStatusAccount(): Promise<IStatusAccount[]> {
     return await this.statusAccountService.findAllStatusAccount();
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Retrieve a status account by ID' })
-  @ApiResponse({ status: 200, description: 'Status account retrieved successfully.' })
-  @ApiResponse({ status: 404, description: 'Not Found: Status account not found.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Status account retrieved successfully.',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found: Status account not found.',
+  })
   async findOneStatusAccount(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<IStatusAccount> {
@@ -52,21 +67,39 @@ export class StatusAccountController {
 
   @Put(':id')
   @ApiOperation({ summary: 'Update a status account by ID' })
-  @ApiResponse({ status: 200, description: 'Status account updated successfully.' })
-  @ApiResponse({ status: 404, description: 'Not Found: Status account not found.' })
-  @ApiResponse({ status: 400, description: 'Bad Request: Invalid status account data.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Status account updated successfully.',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found: Status account not found.',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request: Invalid status account data.',
+  })
   @ApiBody({ type: UpdateStatusAccountDto })
   async updateOneStatusAccount(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateBody: UpdateStatusAccountDto,
   ): Promise<IReturnMessage> {
-    return await this.statusAccountService.updateOneStatusAccount(id, updateBody);
+    return await this.statusAccountService.updateOneStatusAccount(
+      id,
+      updateBody,
+    );
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a status account by ID' })
-  @ApiResponse({ status: 200, description: 'Status account deleted successfully.' })
-  @ApiResponse({ status: 404, description: 'Not Found: Status account not found.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Status account deleted successfully.',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found: Status account not found.',
+  })
   async deleteOneStatusAccount(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<IReturnMessage> {
