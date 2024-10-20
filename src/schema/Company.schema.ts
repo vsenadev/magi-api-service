@@ -3,13 +3,19 @@ import { z } from 'zod';
 export const CreateCompanySchema = z.object({
   name: z.string().min(1).max(255),
   picture: z.string().optional(),
+  cep: z.string().min(1).max(255).optional(),
   cnpj: z.string().min(18).max(18),
   password: z.string().min(1).optional(),
   area: z.string().min(1),
   email: z.string().email(),
-  address_id: z.number().positive(),
-  type_id: z.number().positive(),
-  status_id: z.number().positive(),
+  address_id: z.number().positive().optional(),
+  type_id: z.number().positive().optional(),
+  status_id: z.number().positive().optional(),
+  number: z.string().min(1).optional(),
+  state: z.string().min(1).optional(),
+  street: z.string().min(1).optional(),
+  type_account: z.string().min(1).optional(),
+  city: z.string().min(1).optional(),
 });
 
 export const UpdateCompanySchema = z.object({

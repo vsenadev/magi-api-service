@@ -3,6 +3,7 @@ import { ZodError } from 'zod';
 import { ValidationException } from '@src/exceptions/Validation.exception';
 import { IReturnMessage } from '@src/model/ReturnMessage.model';
 import { CompanyRepository } from '@src/repository/Company.repository';
+import { AddressRepository } from "@src/repository/Address.repository";
 import {
   CreateCompanyDto,
   DeleteCompanyDto,
@@ -14,11 +15,14 @@ import { RandomCode } from '@src/utils/RandomCode.utils';
 import { Cryptography } from '@src/utils/Cryptograph.utils';
 import { Email } from '@src/utils/Email.utils';
 import axios from 'axios';
+import { TypeAccountRepository } from '@src/repository/TypeAccount.repository';
 
 @Injectable()
 export class CompanyService {
   constructor(
     private readonly companyRepository: CompanyRepository,
+    private readonly addressRepository: AddressRepository,
+    private readonly typeAccountRepository: TypeAccountRepository,
     private readonly codeGenerator: RandomCode,
     private readonly cryptography: Cryptography,
     private readonly email: Email,
@@ -27,15 +31,34 @@ export class CompanyService {
   async createCompany(data: CreateCompanyDto): Promise<IReturnMessage> {
     try {
       const codeGenerated = this.codeGenerator.generateRandomPassword();
+
       data['password'] = await this.cryptography.hashPassword(codeGenerated);
+
       const newCompany = new CreateCompanyDto(data);
+
+      newCompany['address_id'] = await this.addressRepository.create({
+        cep: data.cep,
+        street: data.street,
+        city: data.city,
+        state: data.state,
+        number: data.number,
+      });
+
+      const idTypeAccount = await this.typeAccountRepository.findOneByName(
+        data.type_account,
+      );
+
+      newCompany['type_account'] = String(idTypeAccount.id);
+
       await this.companyRepository.create(newCompany);
+
       await this.email.sendEmailWithCode(
         data.email,
         'Defina Sua Primeira Senha!',
         data.name,
         codeGenerated,
       );
+
       return { message: 'Empresa criada com sucesso' };
     } catch (error) {
       if (error instanceof ZodError) {

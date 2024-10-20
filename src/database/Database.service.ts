@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import { Injectable, OnModuleInit, OnModuleDestroy, ConflictException, InternalServerErrorException } from '@nestjs/common';
 import { Client } from 'pg';
 import { IDatabaseReturnModel } from '@src/model/DatabaseReturn.model';
 
@@ -22,7 +22,6 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
   async onModuleInit() {
     try {
       await this.client.connect();
-      console.log('Conexão com o banco de dados estabelecida');
     } catch (error) {
       console.error('Erro ao conectar ao banco de dados:', error);
       throw new Error('Não foi possível conectar ao banco de dados');
@@ -47,7 +46,14 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
       return result;
     } catch (error) {
       console.error('Erro ao executar query:', error);
-      throw new Error('Erro ao executar a query no banco de dados');
+
+      if (error.code === '23505') {
+        throw new ConflictException(`Chave duplicada: ${error.detail}`);
+      }
+
+      throw new InternalServerErrorException(
+        'Erro ao executar a query no banco de dados',
+      );
     }
   }
 }

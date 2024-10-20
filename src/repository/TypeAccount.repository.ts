@@ -37,6 +37,14 @@ export class TypeAccountRepository {
     return result.rows[0];
   }
 
+  async findOneByName(name: string): Promise<ITypeAccount> {
+    const query = `SELECT id FROM public.type_account WHERE name = ($1)`;
+    const param = [name];
+    const result: IDatabaseReturnModel = await this.db.query(query, param);
+
+    return result.rows[0];
+  }
+
   async updateOne(
     id: number,
     data: UpdateTypeAccountDto,

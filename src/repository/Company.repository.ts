@@ -15,7 +15,8 @@ export class CompanyRepository {
   constructor(private readonly db: DatabaseService) {}
   async create(data: CreateCompanyDto): Promise<IReturnMessage> {
     const query =
-      'INSERT INTO public.company (name, picture, cnpj, password, area, email, address_id, type_id, status_id) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)';
+      'INSERT INTO public.company (name, picture, cnpj, password, area, email, address_id, type_id, status_id) values ($1, $2, $3, $4, $5, $6, $7, $8, 1)';
+
     const values = [
       data.name.toUpperCase(),
       data.picture,
@@ -23,9 +24,8 @@ export class CompanyRepository {
       data.password,
       data.area,
       data.email,
-      data.address_id,
-      data.type_id,
-      data.status_id,
+      parseInt(String(data.address_id)),
+      parseInt(data.type_account),
     ];
 
     await this.db.query(query, values);
@@ -35,7 +35,7 @@ export class CompanyRepository {
 
   async findAll(): Promise<ICompany[] | object[]> {
     const query =
-      'SELECT c.id, c.name AS company_name, c.picture, c.cnpj, c.area, c.email, a.street, a.number, a.city, a.state, t.name AS type_account, s.name AS status_account FROM public.company AS c LEFT JOIN public.address AS a ON a.id = c.address_id LEFT JOIN public.type_account AS t ON t.id = c.type_id LEFT JOIN public.status_account AS s ON s.id = c.status_id';
+      'SELECT c.id, c.name, c.picture, c.cnpj, c.area, a.cep, c.email, a.street, a.number, a.city, a.state, t.name AS type_account, s.name AS status_account FROM public.company AS c LEFT JOIN public.address AS a ON a.id = c.address_id LEFT JOIN public.type_account AS t ON t.id = c.type_id LEFT JOIN public.status_account AS s ON s.id = c.status_id';
     const result: IDatabaseReturnModel = await this.db.query(query);
 
     return result.rows;
@@ -43,7 +43,7 @@ export class CompanyRepository {
 
   async findOne(id: number): Promise<ICompany | object> {
     const query =
-      'SELECT c.id, c.name AS company_name, c.picture AS company_picture, c.cnpj, c.area, c.email, a.street, a.complement, a.number, a.city, a.state, t.name AS type_account, s.name AS status_account FROM public.company AS c LEFT JOIN public.address AS a ON a.id = c.address_id LEFT JOIN public.type_account AS t ON t.id = c.type_id LEFT JOIN public.status_account AS s ON s.id = c.status_id WHERE c.id = ($1) GROUP BY c.id, c.name, c.picture, c.cnpj, c.area, c.email, a.street, a.complement, a.number, a.city, a.state, t.name, s.name;';
+      'SELECT c.id, c.name, c.picture, c.cnpj, c.area, c.email, a.street, a.complement, a.cep, a.number, a.city, a.state, t.name AS type_account, s.name AS status_account FROM public.company AS c LEFT JOIN public.address AS a ON a.id = c.address_id LEFT JOIN public.type_account AS t ON t.id = c.type_id LEFT JOIN public.status_account AS s ON s.id = c.status_id WHERE c.id = ($1) GROUP BY c.id, c.name, c.picture, c.cnpj, c.area, c.email, a.cep, a.street, a.complement, a.number, a.city, a.state, t.name, s.name;';
     const param = [id];
     const result: IDatabaseReturnModel = await this.db.query(query, param);
 

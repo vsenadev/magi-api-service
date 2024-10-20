@@ -62,8 +62,14 @@ export class CreateCompanyDto {
     example: 1,
   })
   status_id: number;
+  cep: string;
+  city: string;
+  number: number;
+  state: string;
+  street: string;
+  type_account: string;
 
-  constructor(props: ICompany) {
+  constructor(props: CreateCompanyDto) {
     const parsed = CreateCompanySchema.parse(props);
     this.name = parsed.name;
     this.picture = parsed.picture;
@@ -71,9 +77,13 @@ export class CreateCompanyDto {
     this.password = parsed.password;
     this.area = parsed.area;
     this.email = parsed.email;
-    this.address_id = parsed.address_id;
+    this.cep = parsed.cep;
     this.type_id = parsed.type_id;
-    this.status_id = parsed.status_id;
+    this.city = parsed.city;
+    this.number = parseInt(parsed.number);
+    this.state = parsed.state;
+    this.street = parsed.street;
+    this.type_account = parsed.type_account;
   }
 }
 

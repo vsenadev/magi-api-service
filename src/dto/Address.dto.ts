@@ -42,7 +42,7 @@ export class CreateAddressDto {
     description: 'Street number of the address',
     example: '10',
   })
-  number: string;
+  number: number;
 
   constructor(props: IAddress) {
     const parsed = CreateAddressSchema.parse(props);
@@ -51,7 +51,7 @@ export class CreateAddressDto {
     this.complement = parsed.complement;
     this.city = parsed.city;
     this.state = parsed.state;
-    this.number = parsed.number;
+    this.number = parseInt(parsed.number);
   }
 }
 
