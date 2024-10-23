@@ -14,11 +14,13 @@ import {
   UpdateEmployeeDto,
 } from '@src/dto/Employee.dto';
 import { IEmployee } from '@src/model/Employee.model';
+import { TypeAccountRepository } from '@src/repository/TypeAccount.repository';
 
 @Injectable()
 export class EmployeeService {
   constructor(
     private readonly employeeRepository: EmployeeRepository,
+    private readonly typeAccountRepository: TypeAccountRepository,
     private readonly codeGenerator: RandomCode,
     private readonly cryptography: Cryptography,
     private readonly email: Email,
@@ -28,11 +30,15 @@ export class EmployeeService {
     try {
       const codeGenerated = this.codeGenerator.generateRandomPassword();
       data['password'] = await this.cryptography.hashPassword(codeGenerated);
+      const typeAccount = await this.typeAccountRepository.findOneByName(
+        data['type_account'],
+      );
+      data['type_id'] = typeAccount?.id;
       const newEmployee = new CreateEmployeeDto(data);
       await this.employeeRepository.create(newEmployee);
       await this.email.sendEmailWithCode(
         data.email,
-        'Defina Sua Primeira Senha!',
+        'Bem vindo ao MAGI',
         data.name,
         codeGenerated,
       );
@@ -51,6 +57,16 @@ export class EmployeeService {
   async findAllEmployees(): Promise<IEmployee[] | object[]> {
     try {
       return await this.employeeRepository.findAllEmployees();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async findAllEmployeesWithIdCompany(
+    id: number,
+  ): Promise<IEmployee[] | object[]> {
+    try {
+      return await this.employeeRepository.findAllEmployeesWithIdCompany(id);
     } catch (error) {
       throw error;
     }
