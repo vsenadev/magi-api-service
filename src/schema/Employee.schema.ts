@@ -9,7 +9,8 @@ export const CreateEmployeeSchema = z.object({
   phoneNumber: z.string().min(11).max(11),
   email: z.string().email(),
   status_id: z.number().min(1),
-  type_id: z.number().min(1),
+  type_id: z.number().min(1).optional(),
+  type_account: z.string().min(1),
 });
 
 export const UpdateEmployeeSchema = z.object({

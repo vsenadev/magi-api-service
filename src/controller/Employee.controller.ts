@@ -60,6 +60,13 @@ export class EmployeeController {
     return await this.employeeService.findAllEmployees();
   }
 
+  @Get('/company/:id')
+  async findAllEmployeesWithIdCompany(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<IEmployee[]> {
+    return await this.employeeService.findAllEmployeesWithIdCompany(id);
+  }
+
   @Get(':id')
   @ApiParam({ name: 'id', description: 'Employee ID', example: '123' })
   @ApiOperation({ summary: 'Get a specific employee by ID' })

@@ -22,11 +22,11 @@ export class Email {
           <div style="background-color: #FFFFFF; max-width: 600px; margin: auto; padding: 20px; border-radius: 10px;">
             <h1 style="font-size: 24px; color: #333333; text-align: center;">MAGI</h1>
             <h2 style="font-size: 20px; color: #333333; text-align: center;">Bem-vindo ao MAGI, ${company}!</h2>
-            <p style="font-size: 14px; color: #333333; text-align: center;">Para prosseguir com seu acesso à nossa plataforma, precisamos que você clique no botão abaixo e defina sua senha.</p>
+            <p style="font-size: 14px; color: #333333; text-align: center;">Para prosseguir com seu acesso à nossa plataforma, precisamos que você entre na ferramenta.</p>
             <div style="text-align: center;">
               <img src="https://i.ibb.co/0hTp3qk/bloqueado.png" alt="Cadeado representando a senha" style="display: block; margin: 20px auto; width: 80px;"/>
             </div>
-            <p style="font-size: 14px; color: #333333; text-align: center;">Para liberar a criação da senha, digite o código abaixo:</p>
+            <p style="font-size: 14px; color: #333333; text-align: center;">Para entrar na sua conta, digite o código abaixo, junto de seu email:</p>
             <div style="text-align: center; font-size: 20px; color: #333333; margin: 20px 0;">
               <div style="display: inline-block; padding: 10px; border: 1px solid #333333; border-radius: 8%; margin: 5px;"><strong>${code.charAt(0)}</strong></div>
               <div style="display: inline-block; padding: 10px; border: 1px solid #333333; border-radius: 8%; margin: 5px;"><strong>${code.charAt(1)}</strong></div>
