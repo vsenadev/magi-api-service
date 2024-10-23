@@ -61,6 +61,7 @@ export class CreateEmployeeDto {
     example: 1,
   })
   type_id: number;
+  type_account: string;
 
   constructor(props: IEmployee) {
     const parsed = CreateEmployeeSchema.parse(props);
@@ -73,6 +74,7 @@ export class CreateEmployeeDto {
     this.email = parsed.email;
     this.status_id = parsed.status_id;
     this.type_id = parsed.type_id;
+    this.type_account = parsed.type_account;
   }
 }
 

@@ -15,7 +15,7 @@ export class EmployeeRepository {
   constructor(private readonly db: DatabaseService) {}
   async create(data: CreateEmployeeDto): Promise<IReturnMessage> {
     const query =
-      'INSERT INTO public.employee (name, company_id, picture, cpf, password, email, telephone, status_id, type_id) values ($1, $2, $3, $4, $5, $6, $7, $8, $9)';
+      'INSERT INTO public.employee (name, company_id, picture, cpf, password, email, telephone, status_id, type_id) values ($1, $2, $3, $4, $5, $6, $7, 1, $8)';
     const values = [
       data.name.toUpperCase(),
       data.company_id,
@@ -24,8 +24,7 @@ export class EmployeeRepository {
       data.password,
       data.email,
       data.telephone,
-      data.status_id,
-      data.type_id,
+      parseInt(String(data.type_id)),
     ];
 
     await this.db.query(query, values);
@@ -41,9 +40,20 @@ export class EmployeeRepository {
     return result.rows;
   }
 
-  async findOneEmployee(id: number): Promise<IEmployee | object> {
+  async findAllEmployeesWithIdCompany(
+    id: number,
+  ): Promise<IEmployee[] | object[]> {
     const query =
       'SELECT e.id, e.name AS employee_name, e.picture, c.name AS company_name, e.cpf, e.email, t.name AS type_account, s.name AS status_account FROM public.employee AS e JOIN public.company AS c ON c.id = e.company_id LEFT JOIN public.type_account AS t ON t.id = e.type_id LEFT JOIN public.status_account AS s ON s.id = e.status_id WHERE c.id = ($1);';
+    const param = [id];
+    const result: IDatabaseReturnModel = await this.db.query(query, param);
+
+    return result.rows;
+  }
+
+  async findOneEmployee(id: number): Promise<IEmployee | object> {
+    const query =
+      'SELECT e.id, e.name AS employee_name, e.picture, c.name AS company_name, e.cpf, e.email, t.name AS type_account, s.name AS status_account FROM public.employee AS e JOIN public.company AS c ON c.id = e.company_id LEFT JOIN public.type_account AS t ON t.id = e.type_id LEFT JOIN public.status_account AS s ON s.id = e.status_id WHERE e.id = ($1);';
     const param = [id];
     const result: IDatabaseReturnModel = await this.db.query(query, param);
 

@@ -8,6 +8,7 @@ export interface IEmployee {
   email?: string;
   status_id?: number;
   type_id?: number;
+  type_account?: string;
 }
 
 export interface IEmployeeCode {
