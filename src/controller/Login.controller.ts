@@ -37,7 +37,10 @@ export class LoginController {
   })
   async getLoginInformation(@Req() req: Request) {
     const payload: ILoginPayload | any = req.user;
+
     return {
+      id: payload.id,
+      email: payload.email,
       role: payload.role,
       type: payload.type,
     };

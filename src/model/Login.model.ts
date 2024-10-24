@@ -9,6 +9,7 @@ export interface ILogin {
 }
 
 export interface ILoginPayload {
+  id: number;
   email: string;
   role: boolean;
   type: number;

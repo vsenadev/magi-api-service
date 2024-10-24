@@ -19,11 +19,14 @@ export class AuthService {
   ) {}
 
   public generateToken(
-    id: number,
+    id: number | string,
     email: string,
     role: boolean,
     type: number,
   ): string {
+    if (typeof id === 'string') {
+      id = parseInt(id);
+    }
     const payload = { id, email, role, type };
     return this.jwtService.sign(payload);
   }
@@ -37,13 +40,19 @@ export class AuthService {
   }
 
   public async validateToken(payload: ILoginPayload) {
-    return { email: payload.email, role: payload.role, type: payload.type };
+    return {
+      id: payload.id,
+      email: payload.email,
+      role: payload.role,
+      type: payload.type,
+    };
   }
 
   public async validateUser(data: ValidateLoginDto): Promise<IReturnMessage> {
     try {
       const accountData = new ValidateLoginDto(data);
       const validation: ILogin | undefined = await this.findUser(accountData);
+
       if (
         validation &&
         validation.status_id === 1 &&
