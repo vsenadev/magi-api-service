@@ -69,12 +69,4 @@ export class ProductRepository {
 
     return { message: 'Produto excluído com sucesso' };
   }
-
-  async getCode(id: number): Promise<IReturnMessage | object> {
-    const query = `DELETE FROM public.Product WHERE p.id = ($1)`;
-    const param = [id];
-    const result: IDatabaseReturnModel = await this.db.query(query, param);
-
-    return result.rows[0];
-  }
 }

@@ -84,30 +84,4 @@ export class ProductController {
   ): Promise<IReturnMessage> {
     return await this.productService.deleteOneProduct(id);
   }
-
-  @Put('code/:id')
-  @ApiOperation({ summary: 'Validate product code by ID' })
-  @ApiResponse({
-    status: 200,
-    description: 'Product code validated successfully.',
-  })
-  @ApiResponse({ status: 404, description: 'Not Found: Product not found.' })
-  async validateCode(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() codeBody: ValidateCodeDto,
-  ): Promise<IReturnMessage | boolean> {
-    return await this.productService.validateCode(id, codeBody);
-  }
-
-  @Put('/picture/:id')
-  @UseInterceptors(FileInterceptor('image'))
-  @ApiOperation({ summary: 'Upload an image for a product by ID' })
-  @ApiResponse({ status: 200, description: 'Image uploaded successfully.' })
-  @ApiResponse({ status: 404, description: 'Not Found: Product not found.' })
-  uploadImage(
-    @UploadedFile() image: Express.Multer.File,
-    @Param('id', ParseIntPipe) id: number,
-  ) {
-    return this.productService.uploadImage(id, image);
-  }
 }
