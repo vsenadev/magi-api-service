@@ -2,9 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ZodError } from 'zod';
 import { ValidationException } from '@src/exceptions/Validation.exception';
 import { IReturnMessage } from '@src/model/ReturnMessage.model';
-import { ValidateCodeDto } from '@src/dto/Product.dto';
 import { Cryptography } from '@src/utils/Cryptograph.utils';
-import axios from 'axios';
 import { ProductRepository } from '@src/repository/Product.repository';
 import {
   CreateProductDto,
@@ -36,9 +34,9 @@ export class ProductService {
     }
   }
 
-  async findAllProducts(): Promise<IProduct[] | object[]> {
+  async findAllProducts(companyId: number): Promise<IProduct[] | object[]> {
     try {
-      return await this.productRepository.findAllProducts();
+      return await this.productRepository.findAllProducts(companyId);
     } catch (error) {
       throw error;
     }

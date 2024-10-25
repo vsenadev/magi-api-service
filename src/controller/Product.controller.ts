@@ -39,14 +39,16 @@ export class ProductController {
     return await this.productService.createProduct(body);
   }
 
-  @Get()
+  @Get('/company/:id')
   @ApiOperation({ summary: 'Retrieve all products' })
   @ApiResponse({
     status: 200,
     description: 'List of all products retrieved successfully.',
   })
-  async findAllProduct(): Promise<IProduct[]> {
-    return await this.productService.findAllProducts();
+  async findAllProduct(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<IProduct[]> {
+    return await this.productService.findAllProducts(id);
   }
 
   @Get(':id')
