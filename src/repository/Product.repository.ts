@@ -33,7 +33,7 @@ export class ProductRepository {
 
   async findAllProducts(): Promise<IProduct[] | object[]> {
     const query =
-      'SELECT p.id, p.name, p.lenght, p.width, p.height AS Product_informations FROM public.Product AS p JOIN public.company AS c ON c.id = p.company_id WHERE c.id = p.company_id;';
+      'SELECT p.id, p.name, p.type, p.lenght, p.width, p.height FROM public.Product AS p JOIN public.company AS c ON c.id = p.company_id WHERE c.id = p.company_id;';
     const result: IDatabaseReturnModel = await this.db.query(query);
 
     return result.rows;
@@ -41,7 +41,7 @@ export class ProductRepository {
 
   async findOneProduct(id: number): Promise<IProduct | object> {
     const query =
-      'SELECT p.id, p.name, p.lenght, p.width, p.height AS Product_informations FROM public.Product AS p JOIN public.company AS c ON c.id = p.company_id WHERE c.id = ($1);';
+      'SELECT p.id, p.type, p.value, p.name, p.lenght, p.width, p.height FROM public.Product AS p JOIN public.company AS c ON c.id = p.company_id WHERE p.id = ($1);';
     const param = [id];
     const result: IDatabaseReturnModel = await this.db.query(query, param);
 
