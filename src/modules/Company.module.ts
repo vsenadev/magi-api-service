@@ -8,16 +8,16 @@ import { Cryptography } from '@src/utils/Cryptograph.utils';
 import { Email } from '@src/utils/Email.utils';
 import { AddressRepository } from '@src/repository/Address.repository';
 import { TypeAccountRepository } from '@src/repository/TypeAccount.repository';
+import { DatabaseModule } from '@src/modules/Database.module';
 
 @Module({
-  imports: [],
+  imports: [DatabaseModule],
   controllers: [CompanyController],
   providers: [
     CompanyService,
     CompanyRepository,
     AddressRepository,
     TypeAccountRepository,
-    DatabaseService,
     RandomCode,
     Cryptography,
     Email,

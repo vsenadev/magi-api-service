@@ -18,9 +18,9 @@ export class AddressRepository {
       data.cep,
       data.street,
       data.complement,
+      data.city,
       data.state,
       data.number,
-      data.city,
     ];
 
     const addressId = await this.db.query(query, values);

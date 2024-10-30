@@ -3,10 +3,11 @@ import { StatusAccountController } from '@src/controller/StatusAccount.controlle
 import { StatusAccountService } from '@src/service/StatusAccount.service';
 import { StatusAccountRepository } from '@src/repository/StatusAccount.repository';
 import { DatabaseService } from '@src/database/Database.service';
+import { DatabaseModule } from '@src/modules/Database.module';
 
 @Module({
-  imports: [],
+  imports: [DatabaseModule],
   controllers: [StatusAccountController],
-  providers: [StatusAccountService, StatusAccountRepository, DatabaseService],
+  providers: [StatusAccountService, StatusAccountRepository],
 })
 export class StatusAccountModule {}

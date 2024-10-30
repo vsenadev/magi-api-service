@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AddressRepository } from '@src/repository/Address.repository';
-import { DatabaseService } from '@src/database/Database.service';
+import { DatabaseModule } from '@src/modules/Database.module';
 
 @Module({
-  imports: [],
+  imports: [DatabaseModule],
   controllers: [],
-  providers: [AddressRepository, DatabaseService],
+  providers: [AddressRepository],
 })
 export class AddressModule {}

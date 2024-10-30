@@ -6,14 +6,14 @@ import { Email } from '@src/utils/Email.utils';
 import { ProductController } from '@src/controller/Product.controller';
 import { ProductService } from '@src/service/Product.service';
 import { ProductRepository } from '@src/repository/Product.repository';
+import { DatabaseModule } from '@src/modules/Database.module';
 
 @Module({
-  imports: [],
+  imports: [DatabaseModule],
   controllers: [ProductController],
   providers: [
     ProductService,
     ProductRepository,
-    DatabaseService,
     RandomCode,
     Cryptography,
     Email,

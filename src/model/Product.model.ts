@@ -7,6 +7,7 @@ export interface IProduct {
   width?: number;
   height?: number;
   company_id?: number;
+  quantity?: number;
 }
 
 export interface IProductCode {
