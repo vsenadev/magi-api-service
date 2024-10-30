@@ -3,6 +3,9 @@ import { DatabaseService } from '@src/database/Database.service';
 import { IReturnMessage } from '@src/model/ReturnMessage.model';
 import { CreateDeliveryDto } from '@src/dto/Delivery.dto';
 import { ObjectId } from 'mongodb';
+import { IProduct } from '@src/model/Product.model';
+import { IDatabaseReturnModel } from '@src/model/DatabaseReturn.model';
+import { IDelivery } from '@src/model/Delivery.model';
 
 @Injectable()
 export class DeliveryRepository {
@@ -35,17 +38,19 @@ export class DeliveryRepository {
 
     for (const product of data.products) {
       const insertQuery = `
-        INSERT INTO public.product_delivery (product_id, delivery_id, amount)
+        INSERT INTO public.product_delivery (product_id, delivery_id, amount, quantity)
         VALUES (
           (SELECT id FROM public.product WHERE name = $1),
           $2,
-          (SELECT value FROM public.product WHERE name = $1) * $3
+          (SELECT value FROM public.product WHERE name = $1) * $3,
+          $4
         );
       `;
 
       const insertValues = [
         product.name.toUpperCase(),
         idDelivery.rows[0].id,
+        product.quantity,
         product.quantity,
       ];
 
@@ -62,5 +67,13 @@ export class DeliveryRepository {
     });
 
     return { message: 'Entrega cadastrada com sucesso!' };
+  }
+
+  async findAllDeliveries(id: number): Promise<IDelivery[] | object[]> {
+    const query = 'SELECT * FROM public.product WHERE company_id = ($1);';
+    const param = [id];
+    const result: IDatabaseReturnModel = await this.db.query(query, param);
+
+    return result.rows;
   }
 }

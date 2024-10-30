@@ -5,7 +5,7 @@ import { IReturnMessage } from '@src/model/ReturnMessage.model';
 import { ValidationException } from '@src/exceptions/Validation.exception';
 import { ZodError } from 'zod';
 import { Geolocalization } from '@src/utils/Geolocalization.utils';
-import { IRoute, IRouteInfo } from '@src/model/Delivery.model';
+import { IDelivery, IRoute, IRouteInfo } from '@src/model/Delivery.model';
 import { AddressRepository } from '@src/repository/Address.repository';
 import { CreateAddressDto } from '@src/dto/Address.dto';
 import { Document } from '@src/utils/Document.utils';
@@ -116,6 +116,14 @@ export class DeliveryService {
         return { message: error.message };
       }
 
+      throw error;
+    }
+  }
+
+  async findAllDeliveries(id: number): Promise<IDelivery[]> {
+    try {
+      return await this.deliveryRepository.findAllDeliveries(id);
+    } catch (error) {
       throw error;
     }
   }

@@ -11,10 +11,7 @@ import {
 import { IReturnMessage } from '@src/model/ReturnMessage.model';
 import { IProduct } from '@src/model/Product.model';
 import { ProductService } from '@src/service/Product.service';
-import {
-  CreateProductDto,
-  UpdateProductDto,
-} from '@src/dto/Product.dto';
+import { CreateProductDto, UpdateProductDto } from '@src/dto/Product.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 
 @Controller('v1/product')
