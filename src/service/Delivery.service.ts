@@ -10,7 +10,7 @@ import { AddressRepository } from '@src/repository/Address.repository';
 import { CreateAddressDto } from '@src/dto/Address.dto';
 import { Document } from '@src/utils/Document.utils';
 import { QrCode } from '@src/utils/QrCode.utils';
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
 
 dotenv.config();
 

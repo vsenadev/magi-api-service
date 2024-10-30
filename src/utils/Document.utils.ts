@@ -47,18 +47,38 @@ export class Document {
     doc.moveDown();
     doc.fontSize(12).text(`Destinatário: ${recipient}`, { align: 'left' });
     doc.moveDown();
-    doc.fontSize(12).text(`Saída: ${startingStreet}, ${startingNumber} - ${startingNeighborhood} / ${startingCep}, ${startingCity} - ${startingState}`, { align: 'left' });
+    doc
+      .fontSize(12)
+      .text(
+        `Saída: ${startingStreet}, ${startingNumber} - ${startingNeighborhood} / ${startingCep}, ${startingCity} - ${startingState}`,
+        { align: 'left' },
+      );
     doc.moveDown();
-    doc.fontSize(12).text(`Destino: ${destinationStreet}, ${destinationNumber} - ${destinationNeighborhood} / ${destinationCep}, ${destinationCity} - ${destinationState}`, { align: 'left' });
+    doc
+      .fontSize(12)
+      .text(
+        `Destino: ${destinationStreet}, ${destinationNumber} - ${destinationNeighborhood} / ${destinationCep}, ${destinationCity} - ${destinationState}`,
+        { align: 'left' },
+      );
     doc.moveDown();
     doc.moveDown();
 
-    doc.fontSize(14).text('VERIFICAR ROTA', firstImageX + 10, imageY - titleOffsetY);
-    doc.image(mapsQrCode, firstImageX, imageY, { width: imageWidth, height: imageWidth });
+    doc
+      .fontSize(14)
+      .text('VERIFICAR ROTA', firstImageX + 10, imageY - titleOffsetY);
+    doc.image(mapsQrCode, firstImageX, imageY, {
+      width: imageWidth,
+      height: imageWidth,
+    });
 
-    doc.fontSize(14).text('AUTENTICAR', secondImageX + 10, imageY - titleOffsetY);
+    doc
+      .fontSize(14)
+      .text('AUTENTICAR', secondImageX + 10, imageY - titleOffsetY);
 
-    doc.image(routeAuthentication, secondImageX, imageY, { width: imageWidth, height: imageWidth });
+    doc.image(routeAuthentication, secondImageX, imageY, {
+      width: imageWidth,
+      height: imageWidth,
+    });
 
     doc.end();
 
