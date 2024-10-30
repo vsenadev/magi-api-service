@@ -70,7 +70,7 @@ export class CreateEmployeeDto {
     this.company_id = parsed.company_id;
     this.cpf = parsed.cpf;
     this.password = parsed.password;
-    this.telephone = parsed.phoneNumber; // Ensure consistent naming
+    this.telephone = parsed.telephone; // Ensure consistent naming
     this.email = parsed.email;
     this.status_id = parsed.status_id;
     this.type_id = parsed.type_id;

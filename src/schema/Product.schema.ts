@@ -3,8 +3,8 @@ import { z } from 'zod';
 export const CreateProductSchema = z.object({
   name: z.string().min(1).max(255),
   type: z.string().min(1),
-  value: z.number().min(1).max(100000).optional(),
-  length: z.number().min(1).max(14),
+  value: z.number().min(1).max(100000),
+  length: z.number().min(1),
   width: z.number().min(1),
   height: z.number().min(1),
   company_id: z.number().min(1),

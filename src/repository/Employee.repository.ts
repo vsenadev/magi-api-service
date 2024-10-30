@@ -34,7 +34,7 @@ export class EmployeeRepository {
 
   async findAllEmployees(): Promise<IEmployee[] | object[]> {
     const query =
-      'SELECT e.id, e.name AS employee_name, e.picture, c.name AS company_name, e.cpf, e.email, t.name AS type_account, s.name AS status_account FROM public.employee AS e JOIN public.company AS c ON c.id = e.company_id LEFT JOIN public.type_account AS t ON t.id = e.type_id LEFT JOIN public.status_account AS s ON s.id = e.status_id WHERE c.id = e.company_id;';
+      'SELECT e.id, e.name, e.picture, c.name AS company_name, e.cpf, e.email, t.name AS type_account, s.name AS status_account FROM public.employee AS e JOIN public.company AS c ON c.id = e.company_id LEFT JOIN public.type_account AS t ON t.id = e.type_id LEFT JOIN public.status_account AS s ON s.id = e.status_id WHERE c.id = e.company_id;';
     const result: IDatabaseReturnModel = await this.db.query(query);
 
     return result.rows;
@@ -44,7 +44,7 @@ export class EmployeeRepository {
     id: number,
   ): Promise<IEmployee[] | object[]> {
     const query =
-      'SELECT e.id, e.name AS employee_name, e.picture, c.name AS company_name, e.cpf, e.email, t.name AS type_account, s.name AS status_account FROM public.employee AS e JOIN public.company AS c ON c.id = e.company_id LEFT JOIN public.type_account AS t ON t.id = e.type_id LEFT JOIN public.status_account AS s ON s.id = e.status_id WHERE c.id = ($1);';
+      'SELECT e.id, e.name, e.picture, c.name AS company_name, e.cpf, e.email, t.name AS type_account, s.name AS status_account FROM public.employee AS e JOIN public.company AS c ON c.id = e.company_id LEFT JOIN public.type_account AS t ON t.id = e.type_id LEFT JOIN public.status_account AS s ON s.id = e.status_id WHERE c.id = ($1);';
     const param = [id];
     const result: IDatabaseReturnModel = await this.db.query(query, param);
 
@@ -53,7 +53,7 @@ export class EmployeeRepository {
 
   async findOneEmployee(id: number): Promise<IEmployee | object> {
     const query =
-      'SELECT e.id, e.name AS employee_name, e.picture, c.name AS company_name, e.cpf, e.email, t.name AS type_account, s.name AS status_account FROM public.employee AS e JOIN public.company AS c ON c.id = e.company_id LEFT JOIN public.type_account AS t ON t.id = e.type_id LEFT JOIN public.status_account AS s ON s.id = e.status_id WHERE e.id = ($1);';
+      'SELECT e.id, e.name, e.picture, c.name AS company_name, e.cpf, e.email, e.telephone, t.name AS type_account, s.name AS status_account FROM public.employee AS e JOIN public.company AS c ON c.id = e.company_id LEFT JOIN public.type_account AS t ON t.id = e.type_id LEFT JOIN public.status_account AS s ON s.id = e.status_id WHERE e.id = ($1);';
     const param = [id];
     const result: IDatabaseReturnModel = await this.db.query(query, param);
 
@@ -68,7 +68,8 @@ export class EmployeeRepository {
       id,
       data,
     );
-    const query = `UPDATE public.company SET ${setQuery} WHERE id = ($1)`;
+    console.log(queryParams);
+    const query = `UPDATE public.employee SET ${setQuery} WHERE id = ($1)`;
     await this.db.query(query, queryParams);
 
     return { message: 'Funcionário atualizado com sucesso' };
