@@ -30,7 +30,7 @@ export class CreateProductDto {
     description: 'Length of the product in cm',
     example: 10,
   })
-  length: number;
+  lenght: number;
 
   @ApiProperty({
     description: 'Width of the product in cm',
@@ -55,7 +55,7 @@ export class CreateProductDto {
     this.name = parsed.name;
     this.type = parsed.type;
     this.value = parsed.value;
-    this.length = parsed.length;
+    this.lenght = parsed.lenght;
     this.width = parsed.width;
     this.height = parsed.height;
     this.company_id = parsed.company_id;
@@ -89,7 +89,7 @@ export class UpdateProductDto {
     example: 12,
     required: false,
   })
-  length?: number;
+  lenght?: number;
 
   @ApiProperty({
     description: 'Width of the product in cm (optional)',
@@ -117,7 +117,7 @@ export class UpdateProductDto {
     this.name = parsed.name;
     this.type = parsed.type;
     this.value = parsed.value;
-    this.length = parsed.length;
+    this.lenght = parsed.lenght;
     this.width = parsed.width;
     this.height = parsed.height;
     this.company_id = parsed.company_id;
