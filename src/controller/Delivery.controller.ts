@@ -25,7 +25,19 @@ export class DeliveryController {
   @Get('/company/:id')
   async findAllDeliveries(
     @Param('id', ParseIntPipe) id: number,
-  ): Promise<IDelivery[]> {
+  ): Promise<IDelivery[] | object[]> {
     return await this.deliveryService.findAllDeliveries(id);
+  }
+
+  @Get('/:id')
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<IDelivery | object> {
+    return await this.deliveryService.findOneDelivery(id);
+  }
+
+  @Get('/pdf/:id')
+  async downloadPdf(@Param('id') id: string): Promise<string> {
+    return await this.deliveryService.downloadPdf(id);
   }
 }

@@ -120,9 +120,25 @@ export class DeliveryService {
     }
   }
 
-  async findAllDeliveries(id: number): Promise<IDelivery[]> {
+  async findAllDeliveries(id: number): Promise<IDelivery[] | object[]> {
     try {
       return await this.deliveryRepository.findAllDeliveries(id);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async findOneDelivery(id: number): Promise<IDelivery | object> {
+    try {
+      return await this.deliveryRepository.findOneDelivery(id);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async downloadPdf(id: string): Promise<string> {
+    try {
+      return await this.deliveryRepository.downloadPdf(id);
     } catch (error) {
       throw error;
     }

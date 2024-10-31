@@ -70,10 +70,52 @@ export class DeliveryRepository {
   }
 
   async findAllDeliveries(id: number): Promise<IDelivery[] | object[]> {
-    const query = 'SELECT * FROM public.product WHERE company_id = ($1);';
+    const query =
+      'SELECT d.id, d.route_id, d.name, e.name AS sender, ep.name AS recipient, d.send_date, d.expected_date, ds.name AS status, ls.name AS lock_status, sc.name AS sender_company, rc.name AS recipient_company, (SELECT SUM(amount) FROM public.product_delivery AS a WHERE a.delivery_id = d.id) AS total FROM public.delivery AS d LEFT JOIN public.delivery_status AS ds ON ds.id = d.status_id LEFT JOIN public.lock_status AS ls ON ls.id = d.lock_status LEFT JOIN public.employee AS e ON e.id = d.sender LEFT JOIN public.employee AS ep ON ep.id = d.recipient LEFT JOIN public.company AS sc ON e.company_id = sc.id LEFT JOIN public.company AS rc ON ep.company_id = rc.id WHERE e.company_id = ($1) OR ep.company_id = ($2);';
+
+    const param = [id, id];
+    const result: IDatabaseReturnModel = await this.db.query(query, param);
+    for (const row of result.rows) {
+      const query = await this.db.queryMongo(
+        'delivery',
+        'findOne',
+        { _id: new ObjectId(row['route_id']) },
+        { projection: { _id: 0, expected_route: 0, traced_route: 0, pdf: 0 } },
+      );
+
+      row['distance'] = query['distance'];
+    }
+    return result.rows;
+  }
+
+  async findOneDelivery(id: number): Promise<IDelivery | object> {
+    const query =
+      'SELECT s.street AS starting_street, s.number as starting_number, s.city AS starting_city, s.state AS starting_state, d.street AS destination_street, d.number AS destination_number, d.city AS destination_city, d.state AS destination_state, dy.route_id, st.name AS status, ls.name AS lock_status FROM public.delivery AS dy LEFT JOIN public.address AS s ON s.id = dy."startingAddress" LEFT JOIN public.address AS d ON d.id = dy.destination LEFT JOIN public.delivery_status AS st ON st.id = dy.status_id LEFT JOIN public.lock_status AS ls ON ls.id = dy.lock_status WHERE dy.id = ($1)';
     const param = [id];
     const result: IDatabaseReturnModel = await this.db.query(query, param);
+    const deliveryMongoInfo = await this.db.queryMongo(
+      'delivery',
+      'findOne',
+      { _id: new ObjectId(result.rows[0]['route_id']) },
+      { projection: { _id: 0, pdf: 0 } },
+    );
+    console.log(deliveryMongoInfo);
+    result.rows[0]['distance'] = deliveryMongoInfo['distance'];
+    result.rows[0]['expected_route'] = deliveryMongoInfo['expected_route'];
+    result.rows[0]['traced_route'] = deliveryMongoInfo['traced_route'];
+    result.rows[0]['distance'] = deliveryMongoInfo['distance'];
 
-    return result.rows;
+    return result.rows[0];
+  }
+
+  async downloadPdf(id: string): Promise<string> {
+    return await this.db.queryMongo(
+      'delivery',
+      'findOne',
+      { _id: new ObjectId(id) },
+      {
+        projection: { _id: 0, expected_route: 0, traced_route: 0, distance: 0 },
+      },
+    );
   }
 }
