@@ -5,17 +5,20 @@ import {
   ConflictException,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { Client } from 'pg';
+import { Client as PgClient } from 'pg';
+import { MongoClient, Db } from 'mongodb';
 import { IDatabaseReturnModel } from '@src/model/DatabaseReturn.model';
 
 @Injectable()
 export class DatabaseService implements OnModuleInit, OnModuleDestroy {
-  private client: Client;
+  private pgClient: PgClient;
+  private mongoClient: MongoClient;
+  private mongoDb: Db;
 
   constructor() {
     const sslEnabled = process.env.PG_SSL === 'true';
 
-    this.client = new Client({
+    this.pgClient = new PgClient({
       host: process.env.PG_HOST,
       port: parseInt(process.env.PG_PORT, 10),
       user: process.env.PG_USER,
@@ -23,23 +26,33 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
       database: process.env.PG_DATABASE,
       ssl: sslEnabled ? { rejectUnauthorized: false } : false,
     });
+
+    this.mongoClient = new MongoClient(process.env.MONGO_URL);
   }
 
   async onModuleInit() {
     try {
-      await this.client.connect();
+      await this.pgClient.connect();
+      console.log('Conectado ao PostgreSQL');
+
+      await this.mongoClient.connect();
+      this.mongoDb = this.mongoClient.db(process.env.MONGO_DATABASE);
+      console.log('Conectado ao MongoDB');
     } catch (error) {
-      console.error('Erro ao conectar ao banco de dados:', error);
-      throw new Error('Não foi possível conectar ao banco de dados');
+      console.error('Erro ao conectar aos bancos de dados:', error);
+      throw new Error('Não foi possível conectar aos bancos de dados');
     }
   }
 
   async onModuleDestroy() {
     try {
-      await this.client.end();
-      console.log('Conexão com o banco de dados encerrada');
+      await this.pgClient.end();
+      console.log('Conexão com o PostgreSQL encerrada');
+
+      await this.mongoClient.close();
+      console.log('Conexão com o MongoDB encerrada');
     } catch (error) {
-      console.error('Erro ao encerrar a conexão com o banco de dados:', error);
+      console.error('Erro ao encerrar conexões com os bancos de dados:', error);
     }
   }
 
@@ -48,17 +61,52 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
     values?: any[],
   ): Promise<IDatabaseReturnModel | any> {
     try {
-      const result = await this.client.query(queryText, values);
+      const result = await this.pgClient.query(queryText, values);
       return result;
     } catch (error) {
-      console.error('Erro ao executar query:', error);
+      console.error('Erro ao executar query no PostgreSQL:', error);
 
       if (error.code === '23505') {
         throw new ConflictException(`Chave duplicada: ${error.detail}`);
       }
 
       throw new InternalServerErrorException(
-        'Erro ao executar a query no banco de dados',
+        'Erro ao executar a query no PostgreSQL',
+      );
+    }
+  }
+
+  async queryMongo(
+    collection: string,
+    operation: string,
+    query: any,
+    options?: any,
+  ): Promise<any> {
+    try {
+      const dbCollection = this.mongoDb.collection(collection);
+
+      switch (operation) {
+        case 'find':
+          return await dbCollection.find(query, options).toArray();
+        case 'findOne':
+          return await dbCollection.findOne(query, options);
+        case 'insertOne':
+          return await dbCollection.insertOne(query);
+        case 'updateOne':
+          return await dbCollection.updateOne(
+            query.filter,
+            query.update,
+            options,
+          );
+        case 'deleteOne':
+          return await dbCollection.deleteOne(query);
+        default:
+          throw new Error(`Operação MongoDB desconhecida: ${operation}`);
+      }
+    } catch (error) {
+      console.error('Erro ao executar operação no MongoDB:', error);
+      throw new InternalServerErrorException(
+        'Erro ao executar a operação no MongoDB',
       );
     }
   }

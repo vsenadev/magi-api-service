@@ -31,17 +31,16 @@ export class ProductRepository {
     return { message: 'Produto criado com sucesso' };
   }
 
-  async findAllProducts(): Promise<IProduct[] | object[]> {
-    const query =
-      'SELECT p.id, p.name, p.type, p.lenght, p.width, p.height FROM public.Product AS p JOIN public.company AS c ON c.id = p.company_id WHERE c.id = p.company_id;';
-    const result: IDatabaseReturnModel = await this.db.query(query);
+  async findAllProducts(company_id: number): Promise<IProduct[] | object[]> {
+    const query = 'SELECT * FROM public.product WHERE company_id = ($1);';
+    const param = [company_id];
+    const result: IDatabaseReturnModel = await this.db.query(query, param);
 
     return result.rows;
   }
 
   async findOneProduct(id: number): Promise<IProduct | object> {
-    const query =
-      'SELECT p.id, p.type, p.value, p.name, p.lenght, p.width, p.height FROM public.Product AS p JOIN public.company AS c ON c.id = p.company_id WHERE p.id = ($1);';
+    const query = 'SELECT * FROM public.product WHERE id = ($1);';
     const param = [id];
     const result: IDatabaseReturnModel = await this.db.query(query, param);
 
@@ -64,7 +63,7 @@ export class ProductRepository {
 
   async deleteOneProduct(dto: DeleteProductDto): Promise<IReturnMessage> {
     const query = 'DELETE FROM public.Product AS p WHERE p.id = ($1)';
-    const param = [dto.id]; // Extract the ID from the DTO
+    const param = [dto.id];
     await this.db.query(query, param);
 
     return { message: 'Produto excluído com sucesso' };

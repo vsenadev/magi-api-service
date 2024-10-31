@@ -7,19 +7,11 @@ import {
   ParseIntPipe,
   Put,
   Delete,
-  UseInterceptors,
-  UploadedFile,
 } from '@nestjs/common';
 import { IReturnMessage } from '@src/model/ReturnMessage.model';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { Express } from 'express';
 import { IProduct } from '@src/model/Product.model';
 import { ProductService } from '@src/service/Product.service';
-import {
-  CreateProductDto,
-  UpdateProductDto,
-  ValidateCodeDto,
-} from '@src/dto/Product.dto';
+import { CreateProductDto, UpdateProductDto } from '@src/dto/Product.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 
 @Controller('v1/product')
@@ -39,14 +31,16 @@ export class ProductController {
     return await this.productService.createProduct(body);
   }
 
-  @Get()
+  @Get('/company/:id')
   @ApiOperation({ summary: 'Retrieve all products' })
   @ApiResponse({
     status: 200,
     description: 'List of all products retrieved successfully.',
   })
-  async findAllProduct(): Promise<IProduct[]> {
-    return await this.productService.findAllProducts();
+  async findAllProduct(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<IProduct[]> {
+    return await this.productService.findAllProducts(id);
   }
 
   @Get(':id')

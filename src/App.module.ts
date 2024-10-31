@@ -8,11 +8,13 @@ import { AddressModule } from '@src/modules/Address.module';
 import { CompanyModule } from '@src/modules/Company.module';
 import { EmployeeModule } from '@src/modules/Employee.module';
 import { ProductModule } from '@src/modules/Product.module';
-import { DeliveryModule } from '@src/modules/Delivery.module';
 import { AuthModule } from '@src/modules/Auth.module';
+import { DatabaseModule } from '@src/modules/Database.module';
+import { DeliveryModule } from '@src/modules/Delivery.module';
 
 @Module({
   imports: [
+    DeliveryModule,
     DeliveryStatusModule,
     LockStatusModule,
     StatusAccountModule,
@@ -20,11 +22,11 @@ import { AuthModule } from '@src/modules/Auth.module';
     AddressModule,
     CompanyModule,
     EmployeeModule,
+    DatabaseModule,
     ProductModule,
-    DeliveryModule,
     AuthModule,
   ],
   controllers: [],
-  providers: [DatabaseService],
+  providers: [],
 })
 export class AppModule {}
