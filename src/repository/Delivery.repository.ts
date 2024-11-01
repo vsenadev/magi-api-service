@@ -90,7 +90,7 @@ export class DeliveryRepository {
 
   async findOneDelivery(id: number): Promise<IDelivery | object> {
     const query =
-      'SELECT s.street AS starting_street, s.number as starting_number, s.city AS starting_city, s.state AS starting_state, d.street AS destination_street, d.number AS destination_number, d.city AS destination_city, d.state AS destination_state, dy.route_id, st.name AS status, ls.name AS lock_status FROM public.delivery AS dy LEFT JOIN public.address AS s ON s.id = dy."startingAddress" LEFT JOIN public.address AS d ON d.id = dy.destination LEFT JOIN public.delivery_status AS st ON st.id = dy.status_id LEFT JOIN public.lock_status AS ls ON ls.id = dy.lock_status WHERE dy.id = ($1)';
+      'SELECT dy.name, dy.sender, dy.recipient, dy.send_date, dy.expected_date, dy.products, s.street AS starting_street, s.number as starting_number, s.city AS starting_city, s.state AS starting_state, d.street AS destination_street, d.number AS destination_number, d.city AS destination_city, d.state AS destination_state, dy.route_id, st.name AS status, ls.name AS lock_status FROM public.delivery AS dy LEFT JOIN public.address AS s ON s.id = dy."startingAddress" LEFT JOIN public.address AS d ON d.id = dy.destination LEFT JOIN public.delivery_status AS st ON st.id = dy.status_id LEFT JOIN public.lock_status AS ls ON ls.id = dy.lock_status WHERE dy.id = ($1)';
     const param = [id];
     const result: IDatabaseReturnModel = await this.db.query(query, param);
     const deliveryMongoInfo = await this.db.queryMongo(
