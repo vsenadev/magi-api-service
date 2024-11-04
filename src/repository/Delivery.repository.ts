@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '@src/database/Database.service';
 import { IReturnMessage } from '@src/model/ReturnMessage.model';
-import { CreateDeliveryDto } from '@src/dto/Delivery.dto';
+import { CreateDeliveryDto, ValidateDeliveryDto } from '@src/dto/Delivery.dto';
 import { ObjectId } from 'mongodb';
 import { IProduct } from '@src/model/Product.model';
 import { IDatabaseReturnModel } from '@src/model/DatabaseReturn.model';
-import { IDelivery } from '@src/model/Delivery.model';
+import { IDelivery, ITracedRoute } from '@src/model/Delivery.model';
 
 @Injectable()
 export class DeliveryRepository {
@@ -117,5 +117,68 @@ export class DeliveryRepository {
         projection: { _id: 0, expected_route: 0, traced_route: 0, distance: 0 },
       },
     );
+  }
+
+  async saveTraced(tracedObject: ITracedRoute): Promise<any> {
+    const query =
+      'SELECT d.name AS name, d.route_id, es.email AS sender_email, er.email AS recipient_email FROM public.delivery AS d LEFT JOIN public.employee AS es ON es.id = d.sender LEFT JOIN public.employee AS er ON er.id = d.recipient WHERE d.id = ($1)';
+    const param = [tracedObject?.idObject];
+    const idRoute = await this.db.query(query, param);
+
+    await this.db.queryMongo('delivery', 'updateOne', {
+      filter: { _id: new ObjectId(idRoute.rows[0].route_id) },
+      update: {
+        $push: {
+          traced_route: {
+            longitude: tracedObject.longitude,
+            latitude: tracedObject.latitude,
+          },
+        },
+      },
+    });
+
+    const queryMongo = await this.db.queryMongo(
+      'delivery',
+      'findOne',
+      { _id: new ObjectId(idRoute.rows[0].route_id) },
+      {
+        projection: { traced_route: 0, distance: 0, pdf: 0 },
+      },
+    );
+
+    queryMongo['email'] = idRoute.rows[0].recipient_email;
+    queryMongo['cc'] = idRoute.rows[0].sender_email;
+    queryMongo['name'] = idRoute.rows[0].name;
+
+    return queryMongo;
+  }
+
+  async changeStatus(id: number, status: number): Promise<any> {
+    const query = 'UPDATE public.delivery SET status_id = ($1) WHERE id = ($2)';
+    const param = [status, id];
+
+    await this.db.query(query, param);
+  }
+
+  async validateDelivery(data: ValidateDeliveryDto): Promise<any> {
+    const query =
+      'SELECT e.email, e.password, d.id FROM public.delivery AS d LEFT JOIN public.employee AS e ON e.id = d.recipient WHERE d.route_id = ($1)';
+    const values = [data.id_route];
+
+    const result = await this.db.query(query, values);
+
+    const querymongo = await this.db.queryMongo(
+      'delivery',
+      'findOne',
+      { _id: new ObjectId(data.id_route) },
+      {
+        projection: { _id: 0, distance: 0, pdf: 0 },
+      },
+    );
+
+    result.rows[0]['traced_route'] = querymongo['traced_route'];
+    result.rows[0]['expected_route'] = querymongo['expected_route'];
+
+    return result.rows[0];
   }
 }

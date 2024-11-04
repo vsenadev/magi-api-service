@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { DatabaseService } from '@src/database/Database.service';
 import { DeliveryStatusModule } from '@src/modules/DeliveryStatus.module';
 import { LockStatusModule } from '@src/modules/LockStatus.module';
 import { StatusAccountModule } from '@src/modules/StatusAccount.module';
@@ -11,6 +10,7 @@ import { ProductModule } from '@src/modules/Product.module';
 import { AuthModule } from '@src/modules/Auth.module';
 import { DatabaseModule } from '@src/modules/Database.module';
 import { DeliveryModule } from '@src/modules/Delivery.module';
+import { MqttModule } from '@src/modules/Mqtt.module';
 
 @Module({
   imports: [
@@ -25,6 +25,7 @@ import { DeliveryModule } from '@src/modules/Delivery.module';
     DatabaseModule,
     ProductModule,
     AuthModule,
+    MqttModule,
   ],
   controllers: [],
   providers: [],

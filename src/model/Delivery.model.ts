@@ -20,6 +20,7 @@ export interface IDelivery {
 export interface IRoute {
   longitude?: number;
   latitude?: number;
+  validation?: boolean;
 }
 
 export interface IRoutePoint {
@@ -47,4 +48,10 @@ export interface IRouteInfo {
   coordinates: IRoute[];
   duration: number;
   distance: number;
+}
+
+export interface ITracedRoute {
+  idObject: number;
+  latitude: number;
+  longitude: number;
 }

@@ -57,3 +57,15 @@ export class CreateDeliveryDto {
     this.distance = parsed.distance;
   }
 }
+
+export class ValidateDeliveryDto {
+  email: string;
+  password: string;
+  id_route: string;
+
+  constructor(props: ValidateDeliveryDto) {
+    this.email = props.email;
+    this.password = props.password;
+    this.id_route = props.id_route;
+  }
+}
