@@ -7,6 +7,7 @@ import {
   IRouteInfo,
   IRoutePoint,
   ISteps,
+  ITracedRoute,
 } from '@src/model/Delivery.model';
 
 dotenv.config();
@@ -94,5 +95,56 @@ export class Geolocalization {
     durationInSeconds: number,
   ): Promise<Date> {
     return new Date(startDate.getTime() + durationInSeconds * 1000);
+  }
+
+  async haversineDistance(
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number,
+  ): Promise<number> {
+    const R = 6371e3;
+    const toRadians = (degree: number) => degree * (Math.PI / 180);
+
+    const lat1Rad = toRadians(lat1);
+    const lat2Rad = toRadians(lat2);
+    const deltaLat = toRadians(lat2 - lat1);
+    const deltaLon = toRadians(lon2 - lon1);
+
+    const a =
+      Math.sin(deltaLat / 2) ** 2 +
+      Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(deltaLon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c;
+  }
+
+  async isDistanceGreaterThan100m(
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number,
+  ): Promise<boolean> {
+    const distance = await this.haversineDistance(lat1, lon1, lat2, lon2);
+    return distance <= 100;
+  }
+
+  async validateRoute(
+    localizationObject: ITracedRoute,
+    expectedRoute: IRoute[],
+  ) {
+    for (const route of expectedRoute) {
+      const validation = await this.isDistanceGreaterThan100m(
+        localizationObject.latitude,
+        localizationObject.longitude,
+        route.latitude,
+        route.longitude,
+      );
+      if (validation) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

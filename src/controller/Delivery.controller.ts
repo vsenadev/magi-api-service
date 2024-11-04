@@ -5,9 +5,10 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
 } from '@nestjs/common';
 import { DeliveryService } from '@src/service/Delivery.service';
-import { CreateDeliveryDto } from '@src/dto/Delivery.dto';
+import { CreateDeliveryDto, ValidateDeliveryDto } from '@src/dto/Delivery.dto';
 import { IReturnMessage } from '@src/model/ReturnMessage.model';
 import { IDelivery } from '@src/model/Delivery.model';
 
@@ -20,6 +21,13 @@ export class DeliveryController {
     @Body() body: CreateDeliveryDto,
   ): Promise<IReturnMessage> {
     return await this.deliveryService.createDelivery(body);
+  }
+
+  @Put('validate')
+  async validateDelivery(
+    @Body() body: ValidateDeliveryDto,
+  ): Promise<IReturnMessage> {
+    return await this.deliveryService.validateDelivery(body);
   }
 
   @Get('/company/:id')

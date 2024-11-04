@@ -60,4 +60,48 @@ export class Email {
       return false;
     }
   }
+
+  async sendEmailAlert(
+    to: string,
+    subject: string,
+    orderNumber: string,
+    cc: string,
+  ): Promise<boolean> {
+    const template: string = `
+      <html>
+        <body style="width:100%; height:100%; padding:0; margin:0; background-color:#F6F6F6; font-family: Arial, sans-serif;">
+          <div style="background-color: #FFFFFF; max-width: 600px; margin: auto; padding: 20px; border-radius: 10px;">
+            <h1 style="font-size: 24px; color: #333333; text-align: center;">Alerta de Rota</h1>
+            <h2 style="font-size: 20px; color: #333333; text-align: center;">Sua encomenda, ${orderNumber}, saiu do trajeto planejado.</h2>
+            <p style="font-size: 14px; color: #333333; text-align: center;">Identificamos que sua encomenda desviou do percurso programado. Para mais detalhes, acesse nossa plataforma e acompanhe o status atualizado.</p>
+            <div style="text-align: center;">
+              <img src="https://i.ibb.co/2ynrLgP/alerta.png" alt="Alerta de encomenda" style="display: block; margin: 20px auto; width: 80px;"/>
+            </div>
+            <p style="font-size: 14px; color: #333333; text-align: center;">Clique no botão abaixo para acessar sua conta e verificar as informações detalhadas:</p>
+            <div style="text-align: center; margin: 20px 0;">
+              <a href="#" style="text-decoration: none; color: #FFFFFF;">
+                <button style="background-color: #d9534f; color: #FFFFFF; padding: 10px 20px; border: none; border-radius: 10px; font-size: 18px; font-weight: bold;">VERIFICAR PLATAFORMA</button>
+              </a>
+            </div>
+            <footer style="font-size: 14px; color: #c3c2c2; text-align: center; margin-top: 20px;">MAGI - Monitoramento de Ativos por Geolocalização Inteligente</footer>
+          </div>
+        </body>
+      </html>
+    `;
+
+    try {
+      await SendGrid.send({
+        to: to,
+        cc: cc,
+        from: { email: 'monitoramentodeativos@gmail.com' },
+        subject: subject,
+        text: 'MAGI',
+        html: template,
+      });
+      return true;
+    } catch (error) {
+      console.error('Error sending email:', error);
+      return false;
+    }
+  }
 }

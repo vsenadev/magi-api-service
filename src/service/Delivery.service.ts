@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DeliveryRepository } from '@src/repository/Delivery.repository';
-import { CreateDeliveryDto } from '@src/dto/Delivery.dto';
+import { CreateDeliveryDto, ValidateDeliveryDto } from '@src/dto/Delivery.dto';
 import { IReturnMessage } from '@src/model/ReturnMessage.model';
 import { ValidationException } from '@src/exceptions/Validation.exception';
 import { ZodError } from 'zod';
@@ -11,6 +11,8 @@ import { CreateAddressDto } from '@src/dto/Address.dto';
 import { Document } from '@src/utils/Document.utils';
 import { QrCode } from '@src/utils/QrCode.utils';
 import * as dotenv from 'dotenv';
+import { Cryptography } from '@src/utils/Cryptograph.utils';
+import { MqttService } from '@src/middleware/Mqtt.service';
 
 dotenv.config();
 
@@ -20,7 +22,9 @@ export class DeliveryService {
     private readonly deliveryRepository: DeliveryRepository,
     private readonly geolocalization: Geolocalization,
     private readonly addressRepository: AddressRepository,
+    private readonly cryptograph: Cryptography,
     private readonly document: Document,
+    private readonly mqtt: MqttService,
     private readonly qrCode: QrCode,
   ) {}
 
@@ -139,6 +143,39 @@ export class DeliveryService {
   async downloadPdf(id: string): Promise<string> {
     try {
       return await this.deliveryRepository.downloadPdf(id);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async validateDelivery(data: ValidateDeliveryDto): Promise<IReturnMessage> {
+    try {
+      const query = await this.deliveryRepository.validateDelivery(data);
+
+      const validateLocalization =
+        await this.geolocalization.isDistanceGreaterThan100m(
+          query.traced_route[query.traced_route.length - 1].latitude,
+          query.traced_route[query.traced_route.length - 1].longitude,
+          query.expected_route[query.expected_route.length - 1].latitude,
+          query.expected_route[query.expected_route.length - 1].longitude,
+        );
+
+      if (
+        validateLocalization ||
+        data.email === query.email ||
+        (await this.cryptograph.comparePassword(data.password, query.password))
+      ) {
+        await this.mqtt.sendIdMessage(query.id);
+        return {
+          status: true,
+          message: 'Entrega autenticada com sucesso e trava liberada',
+        };
+      } else {
+        return {
+          status: false,
+          message: 'Local de entrega está incorreto, ou credenciais de acessso',
+        };
+      }
     } catch (error) {
       throw error;
     }
