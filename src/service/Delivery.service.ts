@@ -108,7 +108,7 @@ export class DeliveryService {
         newDelivery.destinationCep,
         await this.qrCode.generateQrCode(mapsUrl),
         await this.qrCode.generateQrCode(
-          `${process.env.REDIRECT_URL}/${routeId}`,
+          `${process.env.REDIRECT_URL}${routeId}`,
         ),
       );
 
