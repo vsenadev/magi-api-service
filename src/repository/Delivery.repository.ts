@@ -82,7 +82,7 @@ export class DeliveryRepository {
         { _id: new ObjectId(row['route_id']) },
         { projection: { _id: 0, expected_route: 0, traced_route: 0, pdf: 0 } },
       );
-
+      console.log(query);
       row['distance'] = query['distance'];
     }
     return result.rows;
@@ -99,12 +99,21 @@ export class DeliveryRepository {
       { _id: new ObjectId(result.rows[0]['route_id']) },
       { projection: { _id: 0, pdf: 0 } },
     );
-    console.log(deliveryMongoInfo);
+
     result.rows[0]['distance'] = deliveryMongoInfo['distance'];
     result.rows[0]['expected_route'] = deliveryMongoInfo['expected_route'];
     result.rows[0]['traced_route'] = deliveryMongoInfo['traced_route'];
     result.rows[0]['distance'] = deliveryMongoInfo['distance'];
 
+    return result.rows[0];
+  }
+
+  async getOneValidation(id: string): Promise<object> {
+    const query =
+      'SELECT d.name AS delivery_name, es.name AS sender, er.name AS recipient, a.street, a.city, a.number FROM public.delivery AS d LEFT JOIN public.employee AS es ON d.sender = es.id LEFT JOIN public.employee AS er ON d.recipient = er.id LEFT JOIN public.address AS a ON d.id = a.id WHERE d.route_id = ($1)';
+    const param = [id];
+
+    const result: IDatabaseReturnModel = await this.db.query(query, param);
     return result.rows[0];
   }
 
