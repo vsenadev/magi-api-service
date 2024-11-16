@@ -169,19 +169,18 @@ export class DeliveryService {
         );
 
       if (
-        validateLocalization ||
-        data.email === query.email ||
+        (validateLocalization && data.email === query.email) &&
         (await this.cryptograph.comparePassword(data.password, query.password))
       ) {
         await this.mqtt.sendIdMessage(query.id);
         return {
           status: true,
-          message: 'Entrega autenticada com sucesso e trava liberada',
+          message: 'Entrega autenticada com sucesso, a trava será liberada em instantes',
         };
       } else {
         return {
           status: false,
-          message: 'Local de entrega está incorreto, ou credenciais de acessso',
+          message: 'Local de entrega ou credenciais de acesso estão incorretas',
         };
       }
     } catch (error) {
