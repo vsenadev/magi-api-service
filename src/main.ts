@@ -13,7 +13,7 @@ async function bootstrap() {
   app.setGlobalPrefix(globalPrefix);
 
   const corsOptions: CorsOptions = {
-    origin: process.env.CORS_ORIGIN || '*',
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Authorization',
     credentials: true,

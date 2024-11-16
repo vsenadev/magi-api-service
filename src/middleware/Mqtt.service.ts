@@ -35,11 +35,6 @@ export class MqttService implements OnModuleInit, OnModuleDestroy {
 
     this.client.on('connect', () => {
       console.log('Connected to MQTT broker');
-      this.subscribeToTopic('topico/localizacaoBackend');
-    });
-
-    this.client.on('connect', () => {
-      console.log('Connected to MQTT broker');
       this.subscribeToTopic('topico/localizacao');
     });
 

@@ -44,6 +44,11 @@ export class DeliveryController {
     return await this.deliveryService.findOneDelivery(id);
   }
 
+  @Get('validation/route/:id')
+  async getOneValidation(@Param('id') id: string): Promise<object> {
+    return await this.deliveryService.getOneValidation(id);
+  }
+
   @Get('/pdf/:id')
   async downloadPdf(@Param('id') id: string): Promise<string> {
     return await this.deliveryService.downloadPdf(id);

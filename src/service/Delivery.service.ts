@@ -140,6 +140,14 @@ export class DeliveryService {
     }
   }
 
+  async getOneValidation(id: string): Promise<object> {
+    try {
+      return await this.deliveryRepository.getOneValidation(id);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async downloadPdf(id: string): Promise<string> {
     try {
       return await this.deliveryRepository.downloadPdf(id);
