@@ -32,7 +32,7 @@ export class DeliveryRepository {
       createDeliveryObject.insertedId.toString(),
       parseInt(String(data.startingAddress)),
       parseInt(String(data.destinationAddress)),
-      data.products.length,
+      data.products.lenght,
     ];
     const idDelivery = await this.db.query(query, values);
 

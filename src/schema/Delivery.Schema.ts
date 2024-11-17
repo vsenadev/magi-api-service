@@ -28,7 +28,7 @@ export const CreateDeliverySchema = z.object({
       name: z.string().min(1).max(255),
       quantity: z.number().min(1).positive(),
       value: z.number().positive(),
-      length: z.number().positive(),
+      lenght: z.number().positive(),
       width: z.number().positive(),
       height: z.number().positive(),
     }),
