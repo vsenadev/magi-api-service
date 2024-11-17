@@ -108,7 +108,7 @@ export class DeliveryService {
         newDelivery.destinationCep,
         await this.qrCode.generateQrCode(mapsUrl),
         await this.qrCode.generateQrCode(
-          `${process.env.CORS_ORIGIN}/${routeId}`,
+          `${process.env.REDIRECT_URL}${routeId}`,
         ),
       );
 
@@ -140,6 +140,14 @@ export class DeliveryService {
     }
   }
 
+  async getOneValidation(id: string): Promise<object> {
+    try {
+      return await this.deliveryRepository.getOneValidation(id);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async downloadPdf(id: string): Promise<string> {
     try {
       return await this.deliveryRepository.downloadPdf(id);
@@ -161,19 +169,20 @@ export class DeliveryService {
         );
 
       if (
-        validateLocalization ||
-        data.email === query.email ||
+        validateLocalization &&
+        data.email === query.email &&
         (await this.cryptograph.comparePassword(data.password, query.password))
       ) {
         await this.mqtt.sendIdMessage(query.id);
         return {
           status: true,
-          message: 'Entrega autenticada com sucesso e trava liberada',
+          message:
+            'Entrega autenticada com sucesso, a trava será liberada em instantes',
         };
       } else {
         return {
           status: false,
-          message: 'Local de entrega está incorreto, ou credenciais de acessso',
+          message: 'Local de entrega ou credenciais de acesso estão incorretas',
         };
       }
     } catch (error) {
