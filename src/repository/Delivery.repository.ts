@@ -83,10 +83,9 @@ export class DeliveryRepository {
         { projection: { _id: 0, expected_route: 0, traced_route: 0, pdf: 0 } },
       );
 
-      if(query['distance'] != null){
+      if (query != null) {
         row['distance'] = query['distance'];
-
-      } 
+      }
     }
     return result.rows;
   }
