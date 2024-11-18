@@ -82,8 +82,10 @@ export class DeliveryRepository {
         { _id: new ObjectId(row['route_id']) },
         { projection: { _id: 0, expected_route: 0, traced_route: 0, pdf: 0 } },
       );
-      console.log(query);
-      row['distance'] = query['distance'];
+
+      if (query != null) {
+        row['distance'] = query['distance'];
+      }
     }
     return result.rows;
   }
