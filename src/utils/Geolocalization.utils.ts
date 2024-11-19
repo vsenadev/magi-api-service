@@ -21,6 +21,9 @@ export class Geolocalization {
     neighborhood: string,
     number: number,
   ): Promise<IRoute> {
+    console.log(
+      `https://nominatim.openstreetmap.org/search?q=${street.trim().replace(' ', '+')}+${number},+${neighborhood.trim().replace(' ', '+')}&format=json&limit=1`,
+    );
     const res = await axios.get(
       `https://nominatim.openstreetmap.org/search?q=${street.trim().replace(' ', '+')}+${number},+${neighborhood.trim().replace(' ', '+')}&format=json&limit=1`,
     );
