@@ -69,7 +69,6 @@ export class DeliveryService {
         state: newDelivery.destinationState,
         street: newDelivery.destinationStreet,
       });
-
       newDelivery.expectedRoute = route.coordinates;
       newDelivery.expectedDate = await this.geolocalization.calcuteEndDate(
         newDelivery.send_date,
@@ -77,7 +76,7 @@ export class DeliveryService {
       );
       newDelivery.distance = route.distance;
       newDelivery.startingAddress =
-        await this.addressRepository.create(newAddressStarting);
+        await this.addressRepository.create(newAddressStarting), this.addressRepository.create(newAddressDestination) ;
       newDelivery.destinationAddress = await this.addressRepository.create(
         newAddressDestination,
       );
@@ -89,7 +88,6 @@ export class DeliveryService {
       );
 
       const routeId = await this.deliveryRepository.createDelivery(newDelivery);
-
       newDelivery.pdf = await this.document.generatePdf(
         newDelivery.name,
         newDelivery.sender,
@@ -159,7 +157,7 @@ export class DeliveryService {
   async validateDelivery(data: ValidateDeliveryDto): Promise<IReturnMessage> {
     try {
       const query = await this.deliveryRepository.validateDelivery(data);
-
+      query.traced_route.push(query.expected_route[0])
       const validateLocalization =
         await this.geolocalization.isDistanceGreaterThan100m(
           query.traced_route[query.traced_route.length - 1].latitude,
@@ -167,7 +165,6 @@ export class DeliveryService {
           query.expected_route[query.expected_route.length - 1].latitude,
           query.expected_route[query.expected_route.length - 1].longitude,
         );
-
       if (
         validateLocalization &&
         data.email === query.email &&
