@@ -112,7 +112,7 @@ export class DeliveryRepository {
 
   async getOneValidation(id: string): Promise<object> {
     const query =
-      'SELECT d.name AS delivery_name, es.name AS sender, er.name AS recipient, a.street, a.city, a.number FROM public.delivery AS d LEFT JOIN public.employee AS es ON d.sender = es.id LEFT JOIN public.employee AS er ON d.recipient = er.id LEFT JOIN public.address AS a ON d.id = a.id WHERE d.route_id = ($1)';
+      'SELECT d.name AS delivery_name, es.name AS sender, er.name AS recipient, a.street, a.city, a.number FROM public.delivery AS d LEFT JOIN public.employee AS es ON d.sender = es.id LEFT JOIN public.employee AS er ON d.recipient = er.id LEFT JOIN public.address AS a ON d.destination = a.id WHERE d.route_id=($1)';
     const param = [id];
 
     const result: IDatabaseReturnModel = await this.db.query(query, param);
