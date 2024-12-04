@@ -20,7 +20,7 @@ export class ProductRepository {
       data.name.toUpperCase(),
       data.type,
       data.value,
-      data.length,
+      data.lenght,
       data.width,
       data.height,
       data.company_id,
