@@ -157,7 +157,7 @@ export class DeliveryService {
   async validateDelivery(data: ValidateDeliveryDto): Promise<IReturnMessage> {
     try {
       const query = await this.deliveryRepository.validateDelivery(data);
-      const objeto = {"latitude": -23.57790638, "longitude": -46.64284830}
+      const objeto = {latitude: -23.57790638, longitude: -46.64284830}
       query.traced_route.push(query.expected_route[0])
       query.traced_route.push(objeto);
       const validateLocalization =
